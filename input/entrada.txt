@@ -1,4 +1,5 @@
-var z:num;
-z := 6567;
+var z:bool;
+z := false;
+z := true;
 print z;
 end

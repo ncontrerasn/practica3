@@ -3,6 +3,7 @@ import java.util.HashMap;
 public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
 
     String comodin = "";
+    double NUMcomodin = 0;
 
     HashMap<String, Object> table = new HashMap<>();
 
@@ -19,7 +20,15 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
             }
             else{
                 //System.out.println("NAME " + name);
-                //table.put(name, visitMain_stmt(ctx.main_stmt()));
+                String TYPE = ctx.var_decl().DATATYPE().toString();
+                if (TYPE.equals("num")){
+                    Object value = 0.0;
+                    table.put(name,value);
+                }else{
+                    //System.out.println("bool");
+                    Object value = false;
+                    table.put(name,value);
+                }
                 comodin = name;
                 visitMain_stmt(ctx.main_stmt());
                 //System.out.println("BUSQUEDA "+table.get(name));
@@ -64,8 +73,63 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
             /*if(table.get(ctx.ID().getText())==null){
                 System.out.println("ERROR");
             }*/
-            Object ans = visitSigno(ctx.signo());
-            return (T) ans;
+            //System.out.println("ID " + table.get(ctx.ID().getText()));
+            if (ctx.signo().ASIGOP()!=null) {
+                String ASGOP = ctx.signo().ASIGOP().toString();
+                Object ans = visitSigno(ctx.signo());
+                if (ans.toString().equals("true") || ans.toString().equals("false")) {
+                    switch (ASGOP) {
+                        case ":=":
+                            /*nada*/
+                            break;
+                        case "+=":
+                            System.err.println("La operacion += no funciona con booleanos");
+                            System.exit(-1);
+                            break;
+                        case "-=":
+                            System.err.println("La operacion -= no funciona con booleanos");
+                            System.exit(-1);
+                            break;
+                        case "*=":
+                            System.err.println("La operacion *= no funciona con booleanos");
+                            System.exit(-1);
+                            break;
+                        case "/=":
+                            System.err.println("La operacion /= no funciona con booleanos");
+                            System.exit(-1);
+                            break;
+                        case "%=":
+                            System.err.println("La operacion %= no funciona con booleanos");
+                            System.exit(-1);
+                            break;
+                    }
+                } else {
+                    Double value =  Double.parseDouble(table.get(ctx.ID().toString()).toString());
+                    Double valotToOperate =  Double.parseDouble(ans.toString());
+                    switch (ASGOP) {
+                        case ":=":
+                            /*nada*/
+                            break;
+                        case "+=":
+                            ans =  value + valotToOperate;
+                            break;
+                        case "-=":
+                            ans = value - valotToOperate;
+                            break;
+                        case "*=":
+                            ans = value * valotToOperate;
+                            break;
+                        case "/=":
+                            ans = value / valotToOperate;
+                            break;
+                        case "%=":
+                            ans = value % valotToOperate;
+                            break;
+                    }
+                }
+                table.put(ctx.ID().toString(), ans);
+                return (T) ans;
+            }
         }
         return null;
     }
@@ -81,9 +145,12 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
     @Override
     public T visitSigno(MiLenguajeParser.SignoContext ctx) {
         //System.out.println("SIGNO");
-        Object ans = visitLexpr2(ctx.lexpr2());
-        //System.out.println("ans de signo"+ans);
-        return (T) ans;
+        if (ctx.ASIGOP() != null){
+            Object ans = visitLexpr2(ctx.lexpr2()).toString();
+            //System.out.println("ans de signo "+ans);
+            return (T) ans;
+        }
+        return null;
     }
 
     @Override
@@ -133,9 +200,14 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
             Object num = ctx.TK_NUM().getSymbol().getText();
             //System.out.println("imprime num = "+num + " fin");
             return (T) num;
+        }else if(ctx.TK_BOOL() != null){
+            Object bool = ctx.TK_BOOL().getSymbol().getText();
+            return (T) bool;
         }else{
             //System.out.println("ALOHA");
             //System.out.println("print de table de aloha " + table.get(ctx.ID().getText()));
+            //System.out.println(ctx.ID());
+            //System.out.println(table.get(ctx.ID()));
             return (T) table.get(ctx.ID().getText());
         }
         //return super.visitFactor(ctx);

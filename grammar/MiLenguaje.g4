@@ -37,12 +37,12 @@ do_sig	: TK_WHILE '(' lexpr ')'
 	    | TK_UNTIL '(' lexpr ')'
 	    ;
 
-signo	: ':=' lexpr2 ';'
-	    | '+=' lexpr2 ';'
-	    | '-=' lexpr2 ';'
-	    | '*=' lexpr2 ';'
-	    | '/=' lexpr2 ';'
-	    | '%=' lexpr2 ';'
+signo	: ASIGOP lexpr2 ';'
+	    | ASIGOP lexpr2 ';'
+	    | ASIGOP lexpr2 ';'
+	    | ASIGOP lexpr2 ';'
+	    | ASIGOP lexpr2 ';'
+	    | ASIGOP lexpr2 ';'
 	    | '++' ';'
 	    | '--' ';'
 	    ;
@@ -168,6 +168,7 @@ TK_ELSE: 'else';
 PIZQ	: '(' ;
 PDER	: ')' ;
 ROP		: ( '<' | '<=' | '>=' | '>' | '==' | '!=' ) ;
+ASIGOP  : ( ':=' | '+=' | '-=' | '*=' | '/=' | '%=' ) ;
 SMCOLON : ';' ;
 MULOP	: ( '*' | '/' );
 SUMOP	: ('+' | '-') ;

@@ -1,4 +1,4 @@
-// Generated from C:/Users/Nicolas Contreras/Desktop/infoMSVS/practica3/grammar\MiLenguaje.g4 by ANTLR 4.8
+// Generated from C:/Users/huber/OneDrive/Escritorio/Materias 2020-2/Lenguajes de programacion/Interprete/grammar\MiLenguaje.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**
