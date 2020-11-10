@@ -18,7 +18,7 @@ public class Main {
             ParseTree tree = parser.prog(); // Iniciar el analisis sintáctico en la regla inicial: r
             MyVisitor<Object> loader = new MyVisitor<>();
             loader.visit(tree);
-            System.out.println(tree.toStringTree(parser)); // imprime el arbol al estilo LISP
+            //System.out.println(tree.toStringTree(parser)); // imprime el arbol al estilo LISP
         } catch (Exception e){
             System.err.println("Error (Test): " + e);
         }
