@@ -1,0 +1,4 @@
+var z:num;
+z := 0;
+print z;
+end
