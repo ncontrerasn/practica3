@@ -96,6 +96,10 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
             System.out.println(ans.toString());
             return (T) ans;
             //System.out.println("puta "+ctx.lexpr());
+        }else if(ctx.TK_WHILE()!=null){
+
+            //
+
         }else if(ctx.TK_IF()!=null){
 
             //System.out.println("IF");
@@ -110,6 +114,7 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                 if (Boolean.parseBoolean(check.toString())){
                     //System.out.println("ENTER IF");
                     ans = visitStmt_block(ctx.stmt_block().get(0));
+
                 }else{
                     //System.out.println("ENTER ELSE");
                     ans = visitStmt_block(ctx.stmt_block().get(1));
@@ -129,6 +134,7 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
             }else {
                 Double value = Double.parseDouble(table.get(ctx.ID().toString()).toString());
                 Object ans = value + 1;
+                table.put(ctx.ID().toString(),ans);
                 return (T) ans;
             }
         }else if (ctx.DCR()!=null) {
@@ -139,6 +145,7 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
             }else {
                 Double value = Double.parseDouble(table.get(ctx.ID().toString()).toString());
                 Object ans = value - 1;
+                table.put(ctx.ID().toString(),ans);
                 return (T) ans;
             }
         }
@@ -249,7 +256,41 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
         Object ans = visitNexpr(ctx.nexpr());
         //System.out.println(table);
         //System.out.println("ans de lexpr "+ans);
-        return (T) ans;
+        if (ctx.nexpr_prima().TK_AND()!=null){
+            Object ans2 = visitLexpr_and(ctx.nexpr_prima().lexpr_and());
+            Object ret = Boolean.parseBoolean(ans.toString()) && Boolean.parseBoolean(ans2.toString());
+            return (T) ret;
+        }else if (ctx.nexpr_prima().TK_OR()!=null){
+            Object ans2 = visitLexpr_or(ctx.nexpr_prima().lexpr_or());
+            Object ret = Boolean.parseBoolean(ans.toString()) || Boolean.parseBoolean(ans2.toString());
+            return (T) ret;
+        }else {
+            return (T) ans;
+        }
+    }
+
+    @Override
+    public T visitLexpr_and(MiLenguajeParser.Lexpr_andContext ctx){
+        Object ans = visitNexpr(ctx.nexpr());
+        if (ctx.nexpr_primab().TK_AND()!=null){
+            Object ans2 = visitLexpr_and(ctx.nexpr_primab().lexpr_and());
+            Object ret = Boolean.parseBoolean(ans.toString()) && Boolean.parseBoolean(ans2.toString());
+            return (T) ret;
+        }else{
+            return (T) ans;
+        }
+    }
+
+    @Override
+    public T visitLexpr_or(MiLenguajeParser.Lexpr_orContext ctx){
+        Object ans = visitNexpr(ctx.nexpr());
+        if (ctx.nexpr_primac().TK_OR()!=null){
+            Object ans2 = visitLexpr_or(ctx.nexpr_primac().lexpr_or());
+            Object ret = Boolean.parseBoolean(ans.toString()) || Boolean.parseBoolean(ans2.toString());
+            return (T) ret;
+        }else{
+            return (T) ans;
+        }
     }
 
     @Override

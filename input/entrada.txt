@@ -1,6 +1,7 @@
-var z:bool;
-z := true;
-if(z) do print 2;
+var z:bool,y:bool;
+z := false;
+y := false;
+if(z or y or z) do print 2;
 else print 5;
-print z;
+print y;
 end

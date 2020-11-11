@@ -135,6 +135,8 @@ f2	: ',' lexpr f2
 	| /*Epsilon*/
 	;
 
+TK_AND  : ('and');
+TK_OR   : ('or');
 DATATYPE	: 'num'
 		    | 'bool'
 		    ;
