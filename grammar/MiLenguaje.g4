@@ -38,11 +38,6 @@ do_sig	: TK_WHILE '(' lexpr ')'
 	    ;
 
 signo	: ASIGOP lexpr2 ';'
-	    | ASIGOP lexpr2 ';'
-	    | ASIGOP lexpr2 ';'
-	    | ASIGOP lexpr2 ';'
-	    | ASIGOP lexpr2 ';'
-	    | ASIGOP lexpr2 ';'
 	    | INCR ';'
 	    | DCR ';'
 	    ;

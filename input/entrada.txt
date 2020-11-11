@@ -1,5 +1,6 @@
 var z:bool;
 z := true;
-++ z ;
+if(z) do print 2;
+else print 5;
 print z;
 end
