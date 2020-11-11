@@ -29,8 +29,8 @@ stmt	: TK_PRINT lexpr ';'
 	    | TK_NEXT ';'
 	    | TK_BREAK ';'
 	    | ID signo
-	    | '--' ID ';'
-	    | '++' ID ';'
+	    | INCR ID ';'
+	    | DCR ID ';'
 	    ;
 
 do_sig	: TK_WHILE '(' lexpr ')'
@@ -43,8 +43,8 @@ signo	: ASIGOP lexpr2 ';'
 	    | ASIGOP lexpr2 ';'
 	    | ASIGOP lexpr2 ';'
 	    | ASIGOP lexpr2 ';'
-	    | '++' ';'
-	    | '--' ';'
+	    | INCR ';'
+	    | DCR ';'
 	    ;
 
 fn_decl_list	: TK_FUNCTION FID ':' DATATYPE '(' var_decl ')' fn_decl_list_withVAR stmt_block ;
@@ -174,6 +174,8 @@ MULOP	: ( '*' | '/' );
 SUMOP	: ('+' | '-') ;
 MODOP   : '%';
 COLON   : ',';
+INCR    : '++';
+DCR     : '--';
 TK_NUM: [0-9]+;
 DOUBLE	: [0-9]+( | [.][0-9]+);
 ID	:[a-zA-Z][a-zA-Z0-9_]*;

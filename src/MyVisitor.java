@@ -61,14 +61,36 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
         //System.out.println("STMT");
         int sum = 0;
         if(ctx.TK_PRINT() != null){
+            //System.out.println("print");
             //System.out.println("PRINT "+ctx.TK_PRINT());
             //Object ans = visitLexpr(ctx.lexpr());
             for (MiLenguajeParser.LexprContext elemContext : ctx.lexpr()) {
                 System.out.println(this.visitLexpr(elemContext));
             }
             //System.out.println("puta "+ctx.lexpr());
+        }else if (ctx.INCR()!=null) {
+            //System.out.println("INCR");
+            if (table.get(ctx.ID().toString()).equals("true") || table.get(ctx.ID().toString()).equals("true")){
+                System.err.println("La operacion ++ y -- no funciona con booleanos");
+                System.exit(-1);
+            }else {
+                Double value = Double.parseDouble(table.get(ctx.ID().toString()).toString());
+                Object ans = value + 1;
+                return (T) ans;
+            }
+        }else if (ctx.DCR()!=null) {
+            //System.out.println("DCR");
+            if (table.get(ctx.ID().toString()).equals("true") || table.get(ctx.ID().toString()).equals("true")){
+                System.err.println("La operacion ++ y -- no funciona con booleanos");
+                System.exit(-1);
+            }else {
+                Double value = Double.parseDouble(table.get(ctx.ID().toString()).toString());
+                Object ans = value - 1;
+                return (T) ans;
+            }
         }
-        if(ctx.ID() != null){
+        else if(ctx.ID() != null){
+            //System.out.println("id");
             //System.out.println("ID " + ctx.ID().getText());
             /*if(table.get(ctx.ID().getText())==null){
                 System.out.println("ERROR");
@@ -129,6 +151,25 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                 }
                 table.put(ctx.ID().toString(), ans);
                 return (T) ans;
+            }else {
+                Object ans = 0.0;
+                String INCRDCR = visitSigno(ctx.signo()).toString();
+                if (table.get(ctx.ID().toString()).equals("true") || table.get(ctx.ID().toString()).equals("true")){
+                    System.err.println("La operacion ++ y -- no funciona con booleanos");
+                    System.exit(-1);
+                }else {
+                    Double value = Double.parseDouble(table.get(ctx.ID().toString()).toString());
+                    switch (INCRDCR) {
+                        case "++":
+                            ans = value + 1;
+                            break;
+                        case "--":
+                            ans = value - 1;
+                            break;
+                    }
+                    table.put(ctx.ID().toString(), ans);
+                    return (T) ans;
+                }
             }
         }
         return null;
@@ -150,7 +191,16 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
             //System.out.println("ans de signo "+ans);
             return (T) ans;
         }
-        return null;
+        else if (ctx.INCR() != null){
+            Object ans = ctx.INCR().toString();
+            //System.out.println("ans de signo "+ans);
+            return (T) ans;
+        }
+        else {
+            Object ans = ctx.DCR().toString();
+            //System.out.println("ans de signo "+ans);
+            return (T) ans;
+        }
     }
 
     @Override

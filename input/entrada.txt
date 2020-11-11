@@ -1,5 +1,5 @@
 var z:bool;
-z := false;
 z := true;
+++ z ;
 print z;
 end
