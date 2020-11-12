@@ -332,6 +332,15 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
         //System.out.println("nexpr");
         //System.out.println(table);
         Object ans = visitRexpr(ctx.rexpr());
+        System.out.println("ans : " + ans);
+        System.out.println("< : " + ctx.rexpr().sig().ROP());
+        if(ctx.rexpr().sig().ROP() != null && ctx.rexpr().sig().ROP().equals('<')){
+            System.out.println("< : " + ctx.rexpr().sig().ROP());
+            Object ans2 = visitSimple_expr(ctx.rexpr().sig().simple_expr());
+            Object ret = Boolean.parseBoolean((String.valueOf(Double.parseDouble(ans.toString()) < Double.parseDouble(ans2.toString()))));
+            System.out.println("RET < : " + ret);
+            return (T) ret;
+        }
         //System.out.println(table);
         //System.out.println("ans de nexpr "+ans);
         return (T) ans;
@@ -342,7 +351,7 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
         //System.out.println("rexpr");
         //System.out.println(table);
         Object ans = visitSimple_expr(ctx.simple_expr());
-        Object ans2 = visitSig(ctx.sig());
+        //Object ans2 = visitSig(ctx.sig());
         //System.out.println(table);
         //System.out.println("ans de rexpr "+ans);
         return (T) ans;

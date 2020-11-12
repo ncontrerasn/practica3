@@ -4,10 +4,10 @@ import org.antlr.v4.runtime.tree.*;
 public class Interpreter {
 
 	public static void main(String [] args) throws Exception{
-		MyLanguageLexer lexer = new MyLanguageLexer(CharStreams.fromFileName("input.txt"));
+		MiLenguajeLexer lexer = new MiLenguajeLexer(CharStreams.fromFileName("input.txt"));
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
-		MyLanguageParser parser = new MyLanguageParser(tokens);
-		ParseTree tree = parser.commands();
+		MiLenguajeParser parser = new MiLenguajeParser(tokens);
+		ParseTree tree = parser.prog();
 
 		MyVisitor<Object> loader = new MyVisitor<Object>();
 		loader.visit(tree);
