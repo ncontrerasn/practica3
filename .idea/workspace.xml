@@ -3,12 +3,24 @@
   <component name="ChangeListManager">
     <list default="true" id="a9d17d19-122a-440a-a674-398447876931" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/MiLenguaje.interp" beforeDir="false" afterPath="$PROJECT_DIR$/gen/MiLenguaje.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/MiLenguaje.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/gen/MiLenguaje.tokens" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/MiLenguajeLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/gen/MiLenguajeLexer.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/MiLenguajeLexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/gen/MiLenguajeLexer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/MiLenguajeLexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/gen/MiLenguajeLexer.tokens" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/MiLenguajeParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/gen/MiLenguajeParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen/MiLenguaje.interp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen/MiLenguaje.tokens" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen/MiLenguajeBaseVisitor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen/MiLenguajeLexer.interp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen/MiLenguajeLexer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen/MiLenguajeLexer.tokens" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen/MiLenguajeParser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen/MiLenguajeVisitor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen/MyLanguage.interp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen/MyLanguage.tokens" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen/MyLanguageBaseListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen/MyLanguageBaseVisitor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen/MyLanguageLexer.interp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen/MyLanguageLexer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen/MyLanguageLexer.tokens" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen/MyLanguageListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen/MyLanguageParser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen/MyLanguageVisitor.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/grammar/MiLenguaje.g4" beforeDir="false" afterPath="$PROJECT_DIR$/grammar/MiLenguaje.g4" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/input/entrada.txt" beforeDir="false" afterPath="$PROJECT_DIR$/input/entrada.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MyVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MyVisitor.java" afterDir="false" />
@@ -79,6 +91,7 @@
       <updated>1604953497767</updated>
       <workItem from="1604953511315" duration="4473000" />
       <workItem from="1604982598670" duration="6317000" />
+      <workItem from="1605144319845" duration="5035000" />
     </task>
     <servers />
   </component>
@@ -102,29 +115,29 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="260" y="278" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1605067235550" />
-    <state width="1877" height="93" key="GridCell.Tab.0.bottom" timestamp="1605138314796">
+    <state width="618" height="568" key="GridCell.Tab.0.bottom" timestamp="1605158255118">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="93" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605138314796" />
-    <state width="1877" height="93" key="GridCell.Tab.0.center" timestamp="1605138314796">
+    <state width="618" height="568" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605158255118" />
+    <state width="618" height="568" key="GridCell.Tab.0.center" timestamp="1605158255118">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="93" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605138314796" />
-    <state width="1877" height="93" key="GridCell.Tab.0.left" timestamp="1605138314795">
+    <state width="618" height="568" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605158255118" />
+    <state width="618" height="568" key="GridCell.Tab.0.left" timestamp="1605158255118">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="93" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605138314795" />
-    <state width="1877" height="93" key="GridCell.Tab.0.right" timestamp="1605138314796">
+    <state width="618" height="568" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605158255118" />
+    <state width="618" height="568" key="GridCell.Tab.0.right" timestamp="1605158255118">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="93" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605138314796" />
+    <state width="618" height="568" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605158255118" />
     <state x="656" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1605131771969">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="656" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605131771969" />
-    <state x="616" y="240" key="run.anything.popup" timestamp="1604974060168">
+    <state x="616" y="240" key="run.anything.popup" timestamp="1605157701701">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1604974060168" />
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1605157701701" />
   </component>
 </project>

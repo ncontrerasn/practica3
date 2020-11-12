@@ -23,7 +23,7 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
     public T visitMain_stmt(MiLenguajeParser.Main_stmtContext ctx) {
         //System.out.println("MAIN_STMT");
         //System.out.println(table);
-        if(ctx.stmt()!=null){
+        if(ctx.stmt() != null){
             visitStmt(ctx.stmt());
             //System.out.println(table);
             visitMain_stmt(ctx.main_stmt());
@@ -60,7 +60,7 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
     @Override
     public T visitCont_data (MiLenguajeParser.Cont_dataContext ctx){
 
-        if (ctx.ID()!=null) {
+        if (ctx.ID() != null) {
             String TYPE = ctx.DATATYPE().toString();
             String name = ctx.ID().toString();
             if(table.get(name) != null){
@@ -96,11 +96,11 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
             System.out.println(ans.toString());
             return (T) ans;
             //System.out.println("puta "+ctx.lexpr());
-        }else if(ctx.TK_WHILE()!=null){
+        }else if(ctx.TK_WHILE() != null){
 
             //
 
-        }else if(ctx.TK_IF()!=null){
+        }else if(ctx.TK_IF() != null){
 
             //System.out.println("IF");
 
@@ -126,7 +126,7 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                 System.exit(-1);
             }
 
-        }else if (ctx.INCR()!=null) {
+        }else if (ctx.INCR() != null) {
             //System.out.println("INCR");
             if (table.get(ctx.ID().toString()).equals("true") || table.get(ctx.ID().toString()).equals("true")){
                 System.err.println("La operacion ++ y -- no funciona con booleanos");
@@ -137,7 +137,7 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                 table.put(ctx.ID().toString(),ans);
                 return (T) ans;
             }
-        }else if (ctx.DCR()!=null) {
+        }else if (ctx.DCR() != null) {
             //System.out.println("DCR");
             if (table.get(ctx.ID().toString()).equals("true") || table.get(ctx.ID().toString()).equals("true")){
                 System.err.println("La operacion ++ y -- no funciona con booleanos");
@@ -256,11 +256,11 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
         Object ans = visitNexpr(ctx.nexpr());
         //System.out.println(table);
         //System.out.println("ans de lexpr "+ans);
-        if (ctx.nexpr_prima().TK_AND()!=null){
+        if (ctx.nexpr_prima().TK_AND() != null){
             Object ans2 = visitLexpr_and(ctx.nexpr_prima().lexpr_and());
             Object ret = Boolean.parseBoolean(ans.toString()) && Boolean.parseBoolean(ans2.toString());
             return (T) ret;
-        }else if (ctx.nexpr_prima().TK_OR()!=null){
+        }else if (ctx.nexpr_prima().TK_OR() != null){
             Object ans2 = visitLexpr_or(ctx.nexpr_prima().lexpr_or());
             Object ret = Boolean.parseBoolean(ans.toString()) || Boolean.parseBoolean(ans2.toString());
             return (T) ret;
@@ -272,7 +272,7 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
     @Override
     public T visitLexpr_and(MiLenguajeParser.Lexpr_andContext ctx){
         Object ans = visitNexpr(ctx.nexpr());
-        if (ctx.nexpr_primab().TK_AND()!=null){
+        if (ctx.nexpr_primab().TK_AND() != null){
             Object ans2 = visitLexpr_and(ctx.nexpr_primab().lexpr_and());
             Object ret = Boolean.parseBoolean(ans.toString()) && Boolean.parseBoolean(ans2.toString());
             return (T) ret;
@@ -284,7 +284,7 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
     @Override
     public T visitLexpr_or(MiLenguajeParser.Lexpr_orContext ctx){
         Object ans = visitNexpr(ctx.nexpr());
-        if (ctx.nexpr_primac().TK_OR()!=null){
+        if (ctx.nexpr_primac().TK_OR() != null){
             Object ans2 = visitLexpr_or(ctx.nexpr_primac().lexpr_or());
             Object ret = Boolean.parseBoolean(ans.toString()) || Boolean.parseBoolean(ans2.toString());
             return (T) ret;
@@ -342,6 +342,7 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
         //System.out.println("rexpr");
         //System.out.println(table);
         Object ans = visitSimple_expr(ctx.simple_expr());
+        Object ans2 = visitSig(ctx.sig());
         //System.out.println(table);
         //System.out.println("ans de rexpr "+ans);
         return (T) ans;
@@ -355,6 +356,16 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
         //System.out.println(table);
         //System.out.println("ans de simple-rexpr "+ans);
         return (T) ans;
+    }
+
+    @Override
+    public T visitSig(MiLenguajeParser.SigContext ctx) {
+        if(ctx.ROP().equals('<')){
+
+        }else if(ctx.ROP().equals('>')){
+
+        }
+        return super.visitSig(ctx);
     }
 
     @Override

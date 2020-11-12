@@ -50,11 +50,11 @@ fn_decl_list_withVAR	: VAR var_decl ';'
 
 var_decl	: ID ':' DATATYPE cont_data ;
 
-cont_data	: ',' ID ':' DATATYPE cont_data
+cont_data	: COLON ID ':' DATATYPE cont_data
 		    | /*Epsilon*/
 		    ;
 
-stmt_block	: '{' stmt stmt_mas '}'
+stmt_block	: CORIZQ stmt stmt_mas '}'
 		    | stmt
 		    ;
 
@@ -93,45 +93,45 @@ nexpr	: TK_NOT '(' lexpr ')'
 
 rexpr	: simple_expr sig ;
 
-sig	: '<' simple_expr
-	| '==' simple_expr
-	| '<=' simple_expr
-	| '>' simple_expr
-	| '>=' simple_expr
-	| '!=' simple_expr
+sig	: ROP simple_expr
+	| ROP simple_expr
+	| ROP simple_expr
+	| ROP simple_expr
+	| ROP simple_expr
+	| ROP simple_expr
 	| /*Epsilon*/
 	;
 
 simple_expr	: term t2 ;
 
-t2	: '+' term t2
-	| '-' term t2
+t2	: SUMOP term t2
+	| SUMOP term t2
 	| /*Epsilon*/
 	;
 
 term	: factor fa ;
 
-fa	: '*' factor fa
-	| '/' factor fa
-	| '%' factor fa
+fa	: MULOP factor fa
+	| MULOP factor fa
+	| MODOP factor fa
 	| /*Epsilon*/
 	;
 
 factor	: TK_NUM
 	    | TK_BOOL
 	    | ID s
-	    | '++' ID
-	    | '--' ID
-	    | '(' lexpr ')'
+	    | INCR ID
+	    | DCR ID
+	    | PIZQ lexpr ')'
 	    | FID '(' lexpr f2 ')'
 	    ;
 
-s	: '++'
-	| '--'
+s	: INCR
+	| DCR
 	| /*Epsilon*/
 	;
 
-f2	: ',' lexpr f2
+f2	: COLON lexpr f2
 	| /*Epsilon*/
 	;
 
@@ -164,6 +164,8 @@ TK_BREAK : 'break' ;
 TK_ELSE: 'else';
 PIZQ	: '(' ;
 PDER	: ')' ;
+CORIZQ  : '{' ;
+CORDER  : '}' ;
 ROP		: ( '<' | '<=' | '>=' | '>' | '==' | '!=' ) ;
 ASIGOP  : ( ':=' | '+=' | '-=' | '*=' | '/=' | '%=' ) ;
 SMCOLON : ';' ;

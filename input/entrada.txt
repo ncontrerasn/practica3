@@ -1,7 +1,8 @@
-var z:bool,y:bool;
-z := false;
+var z:num,y:bool;
+z := 5;
 y := false;
-if(z or y or z) do print 2;
+print z;
+if(z < 6) do print puta;
 else print 5;
 print y;
 end
