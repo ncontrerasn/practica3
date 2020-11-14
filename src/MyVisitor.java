@@ -85,7 +85,12 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
 
     @Override
     public T visitStmt(MiLenguajeParser.StmtContext ctx) {
-        //System.out.println("STMT");
+        System.out.println("STMT SOLO");
+        if(ctx.TK_BREAK() != null){
+            Object ans2 = "break";
+            System.out.println("BREAK");
+            return (T) ans2;
+        }
         //System.out.println(table);
         int sum = 0;
         if(ctx.TK_PRINT() != null){
@@ -175,11 +180,11 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                         table.remove(ctx.lexpr().get(0).nexpr().rexpr().simple_expr().term().factor().ID().toString());
                         table.put(ctx.lexpr().get(0).nexpr().rexpr().simple_expr().term().factor().ID().toString(), jtt);
                     }
-                    if(ctx.stmt_block().get(0).stmt().TK_BREAK() != null){
-                        System.out.println(ctx.stmt_block().get(0).stmt().TK_BREAK().getSymbol().toString());
+                    ans = visitStmt_block(ctx.stmt_block().get(0));
+                    if(ans.toString().equals("break")){
+                        System.out.println("CHAO");
                         break;
                     }
-                    ans = visitStmt_block(ctx.stmt_block().get(0));
                 }
                 while (Boolean.parseBoolean((visitLexpr(ctx.lexpr().get(0)).toString())));
                     //System.out.println("ENTER IF");
@@ -341,11 +346,24 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
 
     @Override
     public T visitStmt_block(MiLenguajeParser.Stmt_blockContext ctx) {
+        System.out.println("STMT BLOCK");
         if(ctx.CORIZQ() != null){
+
             visitStmt(ctx.stmt());
             visitStmt_mas(ctx.stmt_mas());
+            if(ctx.stmt().TK_BREAK() != null){
+                Object ans2 = "break";
+                System.out.println("BREAK");
+                return (T) ans2;
+            }
             return null;
         }else if(ctx.stmt() != null){
+            System.out.println("STMT");
+            if(ctx.stmt().TK_BREAK() != null){
+                Object ans2 = "break";
+                System.out.println("BREAK");
+                return (T) ans2;
+            }
             Object ans = visitStmt(ctx.stmt());
             return (T) ans;
         }
