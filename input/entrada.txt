@@ -1,10 +1,8 @@
 var z:num, p:num;
-z := 5;
+z := 1;
 p := 5;
-if(z == p) do {
-print 1;
-print 5;
-print 10;
+while(z++ < 5) do {
+print z;
+break;
 }
-else print 5;
 end

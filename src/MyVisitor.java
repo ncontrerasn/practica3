@@ -96,22 +96,93 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
             System.out.println(ans.toString());
             return (T) ans;
             //System.out.println("puta "+ctx.lexpr());
-        }else if(ctx.TK_WHILE() != null){
+        }else if(ctx.TK_FOR() != null){
             //System.out.println("IF");
-            Object check = visitLexpr(ctx.lexpr().get(0));
-            Object ans;
+            Object check = visitLexpr(ctx.lexpr().get(1));
+            Object ans = null;
 
             //System.out.println("check: "+Boolean.parseBoolean(check.toString()));
 
             if (check.toString().equals("true")||check.toString().equals("false")){
-                if (Boolean.parseBoolean(check.toString())){
+                while (Boolean.parseBoolean((visitLexpr(ctx.lexpr().get(1)).toString()))){
                     //System.out.println("ENTER IF");
                     ans = visitStmt_block(ctx.stmt_block().get(0));
 
-                }else{
-                    //System.out.println("ENTER ELSE");
-                    ans = visitStmt_block(ctx.stmt_block().get(1));
+                    visitLexpr(ctx.lexpr().get(2));
+                    if(ctx.lexpr().get(2).nexpr().rexpr().simple_expr().term().factor().s() != null && ctx.lexpr().get(2).nexpr().rexpr().simple_expr().term().factor().s().INCR() != null){
+                        Object var = ctx.lexpr().get(2).nexpr().rexpr().simple_expr().term().factor().ID().toString();
+                        Double jtt = Double.parseDouble(table.get(var).toString());
+                        jtt++;
+                        table.remove(ctx.lexpr().get(2).nexpr().rexpr().simple_expr().term().factor().ID().toString());
+                        table.put(ctx.lexpr().get(2).nexpr().rexpr().simple_expr().term().factor().ID().toString(), jtt);
+                    }else if(ctx.lexpr().get(2).nexpr().rexpr().simple_expr().term().factor().s() != null && ctx.lexpr().get(2).nexpr().rexpr().simple_expr().term().factor().s().DCR() != null){
+                        Object var = ctx.lexpr().get(2).nexpr().rexpr().simple_expr().term().factor().ID().toString();
+                        Double jtt = Double.parseDouble(table.get(var).toString());
+                        jtt--;
+                        table.remove(ctx.lexpr().get(2).nexpr().rexpr().simple_expr().term().factor().ID().toString());
+                        table.put(ctx.lexpr().get(2).nexpr().rexpr().simple_expr().term().factor().ID().toString(), jtt);
+                    }
+                    //System.out.println("LEXPR 2"+ctx.lexpr().get(2));
+                    //System.out.println("TABLA "+ table.get("z"));
+
                 }
+                //System.out.println("IF/ELSE ans "+ans.toString());
+                return (T) ans;
+            }else{
+                System.err.println("La operacion IF require un booleano");
+                System.exit(-1);
+            }
+
+        }else if(ctx.TK_WHEN() != null){
+            //System.out.println("IF");
+            Object check = visitLexpr(ctx.lexpr().get(0));
+            Object ans = null;
+
+            //System.out.println("check: "+Boolean.parseBoolean(check.toString()));
+
+            if (check.toString().equals("true")||check.toString().equals("false")){
+                if (Boolean.parseBoolean((visitLexpr(ctx.lexpr().get(0)).toString()))){
+                    //System.out.println("ENTER IF");
+                    ans = visitStmt_block(ctx.stmt_block().get(0));
+                }
+                //System.out.println("IF/ELSE ans "+ans.toString());
+                return (T) ans;
+            }else{
+                System.err.println("La operacion IF require un booleano");
+                System.exit(-1);
+            }
+
+        }else if(ctx.TK_WHILE() != null){
+            //System.out.println("IF");
+            Object check = visitLexpr(ctx.lexpr().get(0));
+            Object ans = null;
+
+            //System.out.println("check: "+Boolean.parseBoolean(check.toString()));
+
+            if (check.toString().equals("true")||check.toString().equals("false")){
+                do{
+
+                    if(ctx.lexpr().get(0).nexpr().rexpr().simple_expr().term().factor().s() != null && ctx.lexpr().get(0).nexpr().rexpr().simple_expr().term().factor().s().INCR() != null){
+                        Object var = ctx.lexpr().get(0).nexpr().rexpr().simple_expr().term().factor().ID().toString();
+                        Double jtt = Double.parseDouble(table.get(var).toString());
+                        jtt++;
+                        table.remove(ctx.lexpr().get(0).nexpr().rexpr().simple_expr().term().factor().ID().toString());
+                        table.put(ctx.lexpr().get(0).nexpr().rexpr().simple_expr().term().factor().ID().toString(), jtt);
+                    }else if(ctx.lexpr().get(0).nexpr().rexpr().simple_expr().term().factor().s() != null && ctx.lexpr().get(0).nexpr().rexpr().simple_expr().term().factor().s().DCR() != null){
+                        Object var = ctx.lexpr().get(0).nexpr().rexpr().simple_expr().term().factor().ID().toString();
+                        Double jtt = Double.parseDouble(table.get(var).toString());
+                        jtt--;
+                        table.remove(ctx.lexpr().get(0).nexpr().rexpr().simple_expr().term().factor().ID().toString());
+                        table.put(ctx.lexpr().get(0).nexpr().rexpr().simple_expr().term().factor().ID().toString(), jtt);
+                    }
+                    if(ctx.stmt_block().get(0).stmt().TK_BREAK() != null){
+                        System.out.println(ctx.stmt_block().get(0).stmt().TK_BREAK().getSymbol().toString());
+                        break;
+                    }
+                    ans = visitStmt_block(ctx.stmt_block().get(0));
+                }
+                while (Boolean.parseBoolean((visitLexpr(ctx.lexpr().get(0)).toString())));
+                    //System.out.println("ENTER IF");
                 //System.out.println("IF/ELSE ans "+ans.toString());
                 return (T) ans;
             }else{
