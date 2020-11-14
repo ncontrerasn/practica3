@@ -329,27 +329,66 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
 
     @Override
     public T visitNexpr(MiLenguajeParser.NexprContext ctx) {
-        //System.out.println("nexpr");
-        //System.out.println(table);
         Object ans = visitRexpr(ctx.rexpr());
-        System.out.println("ans : " + ans);
-        System.out.println("< : " + ctx.rexpr().sig().ROP());
-        if(ctx.rexpr().sig().ROP() != null && ctx.rexpr().sig().ROP().equals('<')){
-            System.out.println("< : " + ctx.rexpr().sig().ROP());
-            Object ans2 = visitSimple_expr(ctx.rexpr().sig().simple_expr());
-            Object ret = Boolean.parseBoolean((String.valueOf(Double.parseDouble(ans.toString()) < Double.parseDouble(ans2.toString()))));
-            System.out.println("RET < : " + ret);
-            return (T) ret;
+        if(ctx.rexpr().sig().ROP() != null){
+            if (ctx.rexpr().sig().ROP().toString().equals("<")){
+                Double ans2 = Double.parseDouble(visitSimple_expr(ctx.rexpr().sig().simple_expr()).toString());
+                Double ans1 = Double.parseDouble(ans.toString());
+                boolean ret2 = ans1 < ans2;
+                Object ret = (Object) ret2;
+                return (T) ret;
+            }
+            else if(ctx.rexpr().sig().ROP().toString().equals(">")){
+                Double ans2 = Double.parseDouble(visitSimple_expr(ctx.rexpr().sig().simple_expr()).toString());
+                Double ans1 = Double.parseDouble(ans.toString());
+                boolean ret2 = ans1 > ans2;
+                Object ret = (Object) ret2;
+                return (T) ret;
+            }
+            else if(ctx.rexpr().sig().ROP().toString().equals("<=")){
+                Double ans2 = Double.parseDouble(visitSimple_expr(ctx.rexpr().sig().simple_expr()).toString());
+                Double ans1 = Double.parseDouble(ans.toString());
+                boolean ret2 = ans1 <= ans2;
+                Object ret = (Object) ret2;
+                return (T) ret;
+            }
+            else if(ctx.rexpr().sig().ROP().toString().equals(">=")){
+                Double ans2 = Double.parseDouble(visitSimple_expr(ctx.rexpr().sig().simple_expr()).toString());
+                Double ans1 = Double.parseDouble(ans.toString());
+                boolean ret2 = ans1 >= ans2;
+                Object ret = (Object) ret2;
+                return (T) ret;
+            }
+            else if(ctx.rexpr().sig().ROP().toString().equals("==")){
+                Double ans2 = Double.parseDouble(visitSimple_expr(ctx.rexpr().sig().simple_expr()).toString());
+                Double ans1 = Double.parseDouble(ans.toString());
+                double resta = Math.abs(ans1 - ans2);
+                boolean ret2;
+                if(resta <= 0.00001)
+                    ret2 = true;
+                else
+                    ret2 = false;
+                Object ret = (Object) ret2;
+                return (T) ret;
+            }
+            else if(ctx.rexpr().sig().ROP().toString().equals("!=")){
+                Double ans2 = Double.parseDouble(visitSimple_expr(ctx.rexpr().sig().simple_expr()).toString());
+                Double ans1 = Double.parseDouble(ans.toString());
+                double resta = Math.abs(ans1 - ans2);
+                boolean ret2;
+                if(resta <= 0.00001)
+                    ret2 = false;
+                else
+                    ret2 = true;
+                Object ret = (Object) ret2;
+                return (T) ret;
+            }
         }
-        //System.out.println(table);
-        //System.out.println("ans de nexpr "+ans);
         return (T) ans;
     }
 
     @Override
     public T visitRexpr(MiLenguajeParser.RexprContext ctx) {
-        //System.out.println("rexpr");
-        //System.out.println(table);
         Object ans = visitSimple_expr(ctx.simple_expr());
         //Object ans2 = visitSig(ctx.sig());
         //System.out.println(table);
@@ -368,16 +407,6 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
     }
 
     @Override
-    public T visitSig(MiLenguajeParser.SigContext ctx) {
-        if(ctx.ROP().equals('<')){
-
-        }else if(ctx.ROP().equals('>')){
-
-        }
-        return super.visitSig(ctx);
-    }
-
-    @Override
     public T visitTerm(MiLenguajeParser.TermContext ctx) {
         //System.out.println("term");
         //System.out.println(table);
@@ -389,8 +418,6 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
 
     @Override
     public T visitFactor(MiLenguajeParser.FactorContext ctx) {
-        //System.out.println("factor");
-        //System.out.println(table);
         if(ctx.TK_NUM() != null){
             Object num = ctx.TK_NUM().getSymbol().getText();
             //System.out.println("imprime num = "+num + " fin");
@@ -399,13 +426,7 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
             Object bool = ctx.TK_BOOL().getSymbol().getText();
             return (T) bool;
         }else{
-            //System.out.println("ALOHA");
-            //System.out.println("print de table de aloha " + table.get(ctx.ID().getText()));
-            //System.out.println(ctx.ID());
-            //System.out.println(table.get(ctx.ID()));
             return (T) table.get(ctx.ID().getText());
         }
-        //return super.visitFactor(ctx);
-        //return super.visitFactor(ctx);
     }
 }

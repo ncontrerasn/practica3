@@ -1,6 +1,7 @@
-var z:num;
+var z:num, puta:num;
 z := 5;
+puta := 5;
 print z;
-if(z < 6) do print 1;
+if(z <= (puta + 2)) do print 1;
 else print 5;
 end

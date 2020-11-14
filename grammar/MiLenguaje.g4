@@ -94,25 +94,18 @@ nexpr	: TK_NOT '(' lexpr ')'
 rexpr	: simple_expr sig ;
 
 sig	: ROP simple_expr
-	| ROP simple_expr
-	| ROP simple_expr
-	| ROP simple_expr
-	| ROP simple_expr
-	| ROP simple_expr
 	| /*Epsilon*/
 	;
 
 simple_expr	: term t2 ;
 
 t2	: SUMOP term t2
-	| SUMOP term t2
 	| /*Epsilon*/
 	;
 
 term	: factor fa ;
 
 fa	: MULOP factor fa
-	| MULOP factor fa
 	| MODOP factor fa
 	| /*Epsilon*/
 	;
