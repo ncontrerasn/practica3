@@ -1,8 +1,4 @@
-var z:num, p:num;
-z := 1;
-p := 5;
-while(z++ < 5) do {
-print 99;
-break;
-}
+var p:num;
+input p;
+print p;
 end

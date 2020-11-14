@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
 
@@ -94,13 +95,42 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
         //System.out.println(table);
         int sum = 0;
         if(ctx.TK_PRINT() != null){
-            //System.out.println("print");
-            //System.out.println("PRINT "+ctx.TK_PRINT());
-            //Object ans = visitLexpr(ctx.lexpr());
             Object ans = visitLexpr(ctx.lexpr(0));
             System.out.println(ans.toString());
             return (T) ans;
-            //System.out.println("puta "+ctx.lexpr());
+        }else if(ctx.TK_INPUT() != null){
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Ingrese el valor de " + ctx.ID().toString() + ": ");
+            if(table.get(ctx.ID().toString()).toString().equals("false") || table.get(ctx.ID().toString()).toString().equals("true")){
+                String input = sc.next();
+                if(input.equals("false") || input.equals("true"))
+                    table.put(ctx.ID().toString(), input);
+                else{
+                    System.err.println("La entrada no coincide con el tipo de dato de la variable "+ ctx.ID().toString());
+                    System.exit(-1);
+                }
+            }else{
+                String cadena = sc.next();
+                double numero;
+                try {
+                    numero = Double.parseDouble(cadena);
+                    table.put(ctx.ID().toString(), numero);
+                } catch (NumberFormatException nfe){
+                    System.err.println("La entrada no coincide con el tipo de dato de la variable "+ ctx.ID().toString());
+                    System.exit(-1);
+                }
+            }
+            System.out.println("INPUT " + table.get(ctx.ID().toString()));
+            /*if (table.get(ctx.ID().toString()).equals("true") || table.get(ctx.ID().toString()).equals("true")){
+                System.err.println("La operacion ++ y -- no funciona con booleanos");
+                System.exit(-1);
+            }else {
+                Double value = Double.parseDouble(table.get(ctx.ID().toString()).toString());
+                Object ans = value + 1;
+                table.put(ctx.ID().toString(),ans);
+                return (T) ans;
+            }*/
+            return null;
         }else if(ctx.TK_FOR() != null){
             //System.out.println("IF");
             Object check = visitLexpr(ctx.lexpr().get(1));
@@ -127,11 +157,8 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                         table.remove(ctx.lexpr().get(2).nexpr().rexpr().simple_expr().term().factor().ID().toString());
                         table.put(ctx.lexpr().get(2).nexpr().rexpr().simple_expr().term().factor().ID().toString(), jtt);
                     }
-                    //System.out.println("LEXPR 2"+ctx.lexpr().get(2));
-                    //System.out.println("TABLA "+ table.get("z"));
 
                 }
-                //System.out.println("IF/ELSE ans "+ans.toString());
                 return (T) ans;
             }else{
                 System.err.println("La operacion IF require un booleano");
@@ -139,24 +166,17 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
             }
 
         }else if(ctx.TK_WHEN() != null){
-            //System.out.println("IF");
             Object check = visitLexpr(ctx.lexpr().get(0));
             Object ans = null;
-
-            //System.out.println("check: "+Boolean.parseBoolean(check.toString()));
-
             if (check.toString().equals("true")||check.toString().equals("false")){
                 if (Boolean.parseBoolean((visitLexpr(ctx.lexpr().get(0)).toString()))){
-                    //System.out.println("ENTER IF");
                     ans = visitStmt_block(ctx.stmt_block().get(0));
                 }
-                //System.out.println("IF/ELSE ans "+ans.toString());
                 return (T) ans;
             }else{
                 System.err.println("La operacion IF require un booleano");
                 System.exit(-1);
             }
-
         }else if(ctx.TK_WHILE() != null){
             //System.out.println("IF");
             Object check = visitLexpr(ctx.lexpr().get(0));
