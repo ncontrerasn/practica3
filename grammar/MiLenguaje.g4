@@ -168,6 +168,7 @@ MODOP   : '%';
 COLON   : ',';
 INCR    : '++';
 DCR     : '--';
+TK_NOT  : 'not';
 TK_NUM: [0-9]+;
 DOUBLE	: [0-9]+( | [.][0-9]+);
 ID	:[a-zA-Z][a-zA-Z0-9_]*;

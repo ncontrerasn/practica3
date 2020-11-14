@@ -1,7 +1,10 @@
-var z:num, puta:num;
+var z:num, p:num;
 z := 5;
-puta := 5;
-print z;
-if(z <= (puta + 2)) do print 1;
+p := 5;
+if(z == p) do {
+print 1;
+print 5;
+print 10;
+}
 else print 5;
 end

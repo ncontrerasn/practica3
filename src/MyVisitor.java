@@ -97,15 +97,31 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
             return (T) ans;
             //System.out.println("puta "+ctx.lexpr());
         }else if(ctx.TK_WHILE() != null){
+            //System.out.println("IF");
+            Object check = visitLexpr(ctx.lexpr().get(0));
+            Object ans;
 
-            //
+            //System.out.println("check: "+Boolean.parseBoolean(check.toString()));
+
+            if (check.toString().equals("true")||check.toString().equals("false")){
+                if (Boolean.parseBoolean(check.toString())){
+                    //System.out.println("ENTER IF");
+                    ans = visitStmt_block(ctx.stmt_block().get(0));
+
+                }else{
+                    //System.out.println("ENTER ELSE");
+                    ans = visitStmt_block(ctx.stmt_block().get(1));
+                }
+                //System.out.println("IF/ELSE ans "+ans.toString());
+                return (T) ans;
+            }else{
+                System.err.println("La operacion IF require un booleano");
+                System.exit(-1);
+            }
 
         }else if(ctx.TK_IF() != null){
-
             //System.out.println("IF");
-
             Object check = visitLexpr(ctx.lexpr().get(0));
-
             Object ans;
 
             //System.out.println("check: "+Boolean.parseBoolean(check.toString()));
@@ -240,13 +256,29 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
     }
 
     @Override
+    public T visitStmt_mas(MiLenguajeParser.Stmt_masContext ctx) {
+        if(ctx.stmt() != null){
+            visitStmt(ctx.stmt());
+            visitStmt_mas(ctx.stmt_mas());
+            return null;
+        }else if(ctx.stmt() != null){
+            Object ans = visitStmt(ctx.stmt());
+            return (T) ans;
+        }
+        return null;
+    }
+
+    @Override
     public T visitStmt_block(MiLenguajeParser.Stmt_blockContext ctx) {
-        //System.out.println("Stmt_block");
-        //System.out.println(table);
-        Object ans = visitStmt(ctx.stmt());
-        //System.out.println(table);
-        //System.out.println("ans de Stmt_block "+ans);
-        return (T) ans;
+        if(ctx.CORIZQ() != null){
+            visitStmt(ctx.stmt());
+            visitStmt_mas(ctx.stmt_mas());
+            return null;
+        }else if(ctx.stmt() != null){
+            Object ans = visitStmt(ctx.stmt());
+            return (T) ans;
+        }
+        return null;
     }
 
     @Override
@@ -264,7 +296,8 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
             Object ans2 = visitLexpr_or(ctx.nexpr_prima().lexpr_or());
             Object ret = Boolean.parseBoolean(ans.toString()) || Boolean.parseBoolean(ans2.toString());
             return (T) ret;
-        }else {
+        }
+        else {
             return (T) ans;
         }
     }
@@ -329,60 +362,147 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
 
     @Override
     public T visitNexpr(MiLenguajeParser.NexprContext ctx) {
-        Object ans = visitRexpr(ctx.rexpr());
-        if(ctx.rexpr().sig().ROP() != null){
-            if (ctx.rexpr().sig().ROP().toString().equals("<")){
-                Double ans2 = Double.parseDouble(visitSimple_expr(ctx.rexpr().sig().simple_expr()).toString());
-                Double ans1 = Double.parseDouble(ans.toString());
-                boolean ret2 = ans1 < ans2;
-                Object ret = (Object) ret2;
-                return (T) ret;
+        Object ans = null;
+        if(ctx.rexpr() != null){
+            ans = visitRexpr(ctx.rexpr());
+            if(ctx.rexpr().sig().ROP() != null){
+                if (ctx.rexpr().sig().ROP().toString().equals("<")){
+                    Double ans2 = Double.parseDouble(visitSimple_expr(ctx.rexpr().sig().simple_expr()).toString());
+                    Double ans1 = Double.parseDouble(ans.toString());
+                    boolean ret2 = ans1 < ans2;
+                    Object ret = (Object) ret2;
+                    if(ctx.rexpr().sig().simple_expr().term().factor().s() != null && ctx.rexpr().sig().simple_expr().term().factor().s().INCR() != null){
+                        Object var = ctx.rexpr().sig().simple_expr().term().factor().ID().toString();
+                        Double jtt = Double.parseDouble(table.get(var).toString());
+                        jtt++;
+                        table.remove(ctx.rexpr().sig().simple_expr().term().factor().ID().toString());
+                        table.put(ctx.rexpr().sig().simple_expr().term().factor().ID().toString(), jtt);
+                    }else if(ctx.rexpr().sig().simple_expr().term().factor().s() != null && ctx.rexpr().sig().simple_expr().term().factor().s().DCR() != null){
+                        Object var = ctx.rexpr().sig().simple_expr().term().factor().ID().toString();
+                        Double jtt = Double.parseDouble(table.get(var).toString());
+                        jtt--;
+                        table.remove(ctx.rexpr().sig().simple_expr().term().factor().ID().toString());
+                        table.put(ctx.rexpr().sig().simple_expr().term().factor().ID().toString(), jtt);
+                    }
+                    return (T) ret;
+                }
+                else if(ctx.rexpr().sig().ROP().toString().equals(">")){
+                    Double ans2 = Double.parseDouble(visitSimple_expr(ctx.rexpr().sig().simple_expr()).toString());
+                    Double ans1 = Double.parseDouble(ans.toString());
+                    boolean ret2 = ans1 > ans2;
+                    Object ret = (Object) ret2;
+                    if(ctx.rexpr().sig().simple_expr().term().factor().s() != null && ctx.rexpr().sig().simple_expr().term().factor().s().INCR() != null){
+                        Object var = ctx.rexpr().sig().simple_expr().term().factor().ID().toString();
+                        Double jtt = Double.parseDouble(table.get(var).toString());
+                        jtt++;
+                        table.remove(ctx.rexpr().sig().simple_expr().term().factor().ID().toString());
+                        table.put(ctx.rexpr().sig().simple_expr().term().factor().ID().toString(), jtt);
+                    }else if(ctx.rexpr().sig().simple_expr().term().factor().s() != null && ctx.rexpr().sig().simple_expr().term().factor().s().DCR() != null){
+                        Object var = ctx.rexpr().sig().simple_expr().term().factor().ID().toString();
+                        Double jtt = Double.parseDouble(table.get(var).toString());
+                        jtt--;
+                        table.remove(ctx.rexpr().sig().simple_expr().term().factor().ID().toString());
+                        table.put(ctx.rexpr().sig().simple_expr().term().factor().ID().toString(), jtt);
+                    }
+                    return (T) ret;
+                }
+                else if(ctx.rexpr().sig().ROP().toString().equals("<=")){
+                    Double ans2 = Double.parseDouble(visitSimple_expr(ctx.rexpr().sig().simple_expr()).toString());
+                    Double ans1 = Double.parseDouble(ans.toString());
+                    boolean ret2 = ans1 <= ans2;
+                    Object ret = (Object) ret2;
+                    if(ctx.rexpr().sig().simple_expr().term().factor().s() != null && ctx.rexpr().sig().simple_expr().term().factor().s().INCR() != null){
+                        Object var = ctx.rexpr().sig().simple_expr().term().factor().ID().toString();
+                        Double jtt = Double.parseDouble(table.get(var).toString());
+                        jtt++;
+                        table.remove(ctx.rexpr().sig().simple_expr().term().factor().ID().toString());
+                        table.put(ctx.rexpr().sig().simple_expr().term().factor().ID().toString(), jtt);
+                    }else if(ctx.rexpr().sig().simple_expr().term().factor().s() != null && ctx.rexpr().sig().simple_expr().term().factor().s().DCR() != null){
+                        Object var = ctx.rexpr().sig().simple_expr().term().factor().ID().toString();
+                        Double jtt = Double.parseDouble(table.get(var).toString());
+                        jtt--;
+                        table.remove(ctx.rexpr().sig().simple_expr().term().factor().ID().toString());
+                        table.put(ctx.rexpr().sig().simple_expr().term().factor().ID().toString(), jtt);
+                    }
+                    return (T) ret;
+                }
+                else if(ctx.rexpr().sig().ROP().toString().equals(">=")){
+                    Double ans2 = Double.parseDouble(visitSimple_expr(ctx.rexpr().sig().simple_expr()).toString());
+                    Double ans1 = Double.parseDouble(ans.toString());
+                    boolean ret2 = ans1 >= ans2;
+                    Object ret = (Object) ret2;
+                    if(ctx.rexpr().sig().simple_expr().term().factor().s() != null && ctx.rexpr().sig().simple_expr().term().factor().s().INCR() != null){
+                        Object var = ctx.rexpr().sig().simple_expr().term().factor().ID().toString();
+                        Double jtt = Double.parseDouble(table.get(var).toString());
+                        jtt++;
+                        table.remove(ctx.rexpr().sig().simple_expr().term().factor().ID().toString());
+                        table.put(ctx.rexpr().sig().simple_expr().term().factor().ID().toString(), jtt);
+                    }else if(ctx.rexpr().sig().simple_expr().term().factor().s() != null && ctx.rexpr().sig().simple_expr().term().factor().s().DCR() != null){
+                        Object var = ctx.rexpr().sig().simple_expr().term().factor().ID().toString();
+                        Double jtt = Double.parseDouble(table.get(var).toString());
+                        jtt--;
+                        table.remove(ctx.rexpr().sig().simple_expr().term().factor().ID().toString());
+                        table.put(ctx.rexpr().sig().simple_expr().term().factor().ID().toString(), jtt);
+                    }
+                    return (T) ret;
+                }
+                else if(ctx.rexpr().sig().ROP().toString().equals("==")){
+                    Double ans2 = Double.parseDouble(visitSimple_expr(ctx.rexpr().sig().simple_expr()).toString());
+                    Double ans1 = Double.parseDouble(ans.toString());
+                    double resta = Math.abs(ans1 - ans2);
+                    boolean ret2;
+                    if(resta <= 0.00001)
+                        ret2 = true;
+                    else
+                        ret2 = false;
+                    Object ret = (Object) ret2;
+                    if(ctx.rexpr().sig().simple_expr().term().factor().s() != null && ctx.rexpr().sig().simple_expr().term().factor().s().INCR() != null){
+                        Object var = ctx.rexpr().sig().simple_expr().term().factor().ID().toString();
+                        Double jtt = Double.parseDouble(table.get(var).toString());
+                        jtt++;
+                        table.remove(ctx.rexpr().sig().simple_expr().term().factor().ID().toString());
+                        table.put(ctx.rexpr().sig().simple_expr().term().factor().ID().toString(), jtt);
+                    }else if(ctx.rexpr().sig().simple_expr().term().factor().s() != null && ctx.rexpr().sig().simple_expr().term().factor().s().DCR() != null){
+                        Object var = ctx.rexpr().sig().simple_expr().term().factor().ID().toString();
+                        Double jtt = Double.parseDouble(table.get(var).toString());
+                        jtt--;
+                        table.remove(ctx.rexpr().sig().simple_expr().term().factor().ID().toString());
+                        table.put(ctx.rexpr().sig().simple_expr().term().factor().ID().toString(), jtt);
+                    }
+                    return (T) ret;
+                }
+                else if(ctx.rexpr().sig().ROP().toString().equals("!=")){
+                    Double ans2 = Double.parseDouble(visitSimple_expr(ctx.rexpr().sig().simple_expr()).toString());
+                    Double ans1 = Double.parseDouble(ans.toString());
+                    double resta = Math.abs(ans1 - ans2);
+                    boolean ret2;
+                    if(resta <= 0.00001)
+                        ret2 = false;
+                    else
+                        ret2 = true;
+                    Object ret = (Object) ret2;
+                    if(ctx.rexpr().sig().simple_expr().term().factor().s() != null && ctx.rexpr().sig().simple_expr().term().factor().s().INCR() != null){
+                        Object var = ctx.rexpr().sig().simple_expr().term().factor().ID().toString();
+                        Double jtt = Double.parseDouble(table.get(var).toString());
+                        jtt++;
+                        table.remove(ctx.rexpr().sig().simple_expr().term().factor().ID().toString());
+                        table.put(ctx.rexpr().sig().simple_expr().term().factor().ID().toString(), jtt);
+                    }else if(ctx.rexpr().sig().simple_expr().term().factor().s() != null && ctx.rexpr().sig().simple_expr().term().factor().s().DCR() != null){
+                        Object var = ctx.rexpr().sig().simple_expr().term().factor().ID().toString();
+                        Double jtt = Double.parseDouble(table.get(var).toString());
+                        jtt--;
+                        table.remove(ctx.rexpr().sig().simple_expr().term().factor().ID().toString());
+                        table.put(ctx.rexpr().sig().simple_expr().term().factor().ID().toString(), jtt);
+                    }
+                    return (T) ret;
+                }
             }
-            else if(ctx.rexpr().sig().ROP().toString().equals(">")){
-                Double ans2 = Double.parseDouble(visitSimple_expr(ctx.rexpr().sig().simple_expr()).toString());
-                Double ans1 = Double.parseDouble(ans.toString());
-                boolean ret2 = ans1 > ans2;
-                Object ret = (Object) ret2;
-                return (T) ret;
-            }
-            else if(ctx.rexpr().sig().ROP().toString().equals("<=")){
-                Double ans2 = Double.parseDouble(visitSimple_expr(ctx.rexpr().sig().simple_expr()).toString());
-                Double ans1 = Double.parseDouble(ans.toString());
-                boolean ret2 = ans1 <= ans2;
-                Object ret = (Object) ret2;
-                return (T) ret;
-            }
-            else if(ctx.rexpr().sig().ROP().toString().equals(">=")){
-                Double ans2 = Double.parseDouble(visitSimple_expr(ctx.rexpr().sig().simple_expr()).toString());
-                Double ans1 = Double.parseDouble(ans.toString());
-                boolean ret2 = ans1 >= ans2;
-                Object ret = (Object) ret2;
-                return (T) ret;
-            }
-            else if(ctx.rexpr().sig().ROP().toString().equals("==")){
-                Double ans2 = Double.parseDouble(visitSimple_expr(ctx.rexpr().sig().simple_expr()).toString());
-                Double ans1 = Double.parseDouble(ans.toString());
-                double resta = Math.abs(ans1 - ans2);
-                boolean ret2;
-                if(resta <= 0.00001)
-                    ret2 = true;
-                else
-                    ret2 = false;
-                Object ret = (Object) ret2;
-                return (T) ret;
-            }
-            else if(ctx.rexpr().sig().ROP().toString().equals("!=")){
-                Double ans2 = Double.parseDouble(visitSimple_expr(ctx.rexpr().sig().simple_expr()).toString());
-                Double ans1 = Double.parseDouble(ans.toString());
-                double resta = Math.abs(ans1 - ans2);
-                boolean ret2;
-                if(resta <= 0.00001)
-                    ret2 = false;
-                else
-                    ret2 = true;
-                Object ret = (Object) ret2;
-                return (T) ret;
-            }
+        }else if(ctx.TK_NOT() != null){
+            Object ans2 = visitLexpr(ctx.lexpr());
+            String res = String.valueOf(ans2);
+            boolean a = !Boolean.parseBoolean(res);
+            Object ret = (Object) a;
+            return (T) ret;
         }
         return (T) ans;
     }
@@ -425,8 +545,33 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
         }else if(ctx.TK_BOOL() != null){
             Object bool = ctx.TK_BOOL().getSymbol().getText();
             return (T) bool;
-        }else{
+        }else if (ctx.PIZQ() != null){
+            Object ans = visitLexpr(ctx.lexpr());
+            return (T) ans;
+        }else if (ctx.INCR() != null){
+            Object var = ctx.ID().toString();
+            Double ans = Double.parseDouble(table.get(var).toString());
+            ans++;
+            table.remove(ctx.ID().toString());
+            table.put(ctx.ID().toString(), ans);
+            return (T) ans;
+        }else if (ctx.DCR() != null){
+            Object var = ctx.ID().toString();
+            Double ans = Double.parseDouble(table.get(var).toString());
+            ans--;
+            table.remove(ctx.ID().toString());
+            table.put(ctx.ID().toString(), ans);
+            return (T) ans;
+        }else if (ctx.ID() != null){
+            if (ctx.s().INCR() != null || ctx.s().DCR() != null){
+                Object var = ctx.ID().toString();
+                Double ans = Double.parseDouble(table.get(var).toString());
+                return (T) ans;
+            }
+        }
+        else{
             return (T) table.get(ctx.ID().getText());
         }
+        return (T) table.get(ctx.ID().getText());
     }
 }
