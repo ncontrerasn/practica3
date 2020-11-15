@@ -106,7 +106,6 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                     System.exit(-1);
                 }
             }
-            System.out.println("INPUT " + table.get(ctx.ID().toString()));
             return null;
         }else if(ctx.TK_FOR() != null){
             Object check = visitLexpr(ctx.lexpr().get(1));
@@ -131,7 +130,7 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                 }
                 return (T) ans;
             }else{
-                System.err.println("La operacion IF require un booleano");
+                System.err.println("La operacion for require un booleano");
                 System.exit(-1);
             }
         }else if(ctx.TK_WHEN() != null){
@@ -155,7 +154,7 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                 }
                 return (T) ans;
             }else{
-                System.err.println("La operacion IF require un booleano");
+                System.err.println("La operacion unless require un booleano");
                 System.exit(-1);
             }
         }else if(ctx.TK_WHILE() != null){
@@ -198,6 +197,12 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                 }
             }
             return (T) ans;
+        }else if(ctx.TK_REPEAT() != null){
+            Object ans = null;
+            for (int i = 0; i < Integer.parseInt(ctx.TK_NUM().toString()); i++){
+                ans = visitStmt_block(ctx.stmt_block().get(0));
+            }
+            return (T) ans;
         }else if(ctx.TK_IF() != null){
             //System.out.println("IF");
             Object check = visitLexpr(ctx.lexpr().get(0));
@@ -210,7 +215,7 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                 }
                 return (T) ans;
             }else{
-                System.err.println("La operacion IF require un booleano");
+                System.err.println("La operacion if require un booleano");
                 System.exit(-1);
             }
         }else if (ctx.INCR() != null) {

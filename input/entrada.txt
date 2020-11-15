@@ -1,4 +1,6 @@
 var p:num;
-p := 4;
-unless(p > 4) do print 99;
+repeat 3:{
+print 99;
+}
+unless (p == 4) do print 100;
 end
