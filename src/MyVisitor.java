@@ -341,25 +341,11 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
 
     @Override
     public T visitStmt_block(MiLenguajeParser.Stmt_blockContext ctx) {
-        //System.out.println("STMT BLOCK");
         if(ctx.CORIZQ() != null){
             Object ans2 = visitStmt(ctx.stmt());
             visitStmt_mas(ctx.stmt_mas());
-            /*if(ctx.stmt().TK_BREAK() != null){
-                Object ans2 = "break";
-                System.out.println("BREAK");
-                System.out.println("ANS BREAK : " + ans2);
-                return (T) ans2;
-            }*/
             return (T) ans2;
         }else if(ctx.stmt() != null){
-            //System.out.println("STMT");
-            /*if(ctx.stmt().TK_BREAK() != null){
-                Object ans2 = "break";
-                System.out.println("BREAK");
-                System.out.println("ANS BREAK : " + ans2);
-                return (T) ans2;
-            }*/
             Object ans = visitStmt(ctx.stmt());
             return (T) ans;
         }
@@ -368,11 +354,7 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
 
     @Override
     public T visitLexpr(MiLenguajeParser.LexprContext ctx) {
-        //System.out.println("LEXPR");
-        //System.out.println(table);
         Object ans = visitNexpr(ctx.nexpr());
-        //System.out.println(table);
-        //System.out.println("ans de lexpr "+ans);
         if (ctx.nexpr_prima().TK_AND() != null){
             Object ans2 = visitLexpr_and(ctx.nexpr_prima().lexpr_and());
             Object ret = Boolean.parseBoolean(ans.toString()) && Boolean.parseBoolean(ans2.toString());
