@@ -163,8 +163,10 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
             Object check = visitLexpr(ctx.lexpr().get(0));
             if (check.toString().equals("true")||check.toString().equals("false")){
                 do{
-                    if(a)
+                    if(a){
+                        a = false;
                         break;
+                    }
                     if(ctx.lexpr().get(0).nexpr().rexpr().simple_expr().term().factor().s() != null && ctx.lexpr().get(0).nexpr().rexpr().simple_expr().term().factor().s().INCR() != null){
                         Object var = ctx.lexpr().get(0).nexpr().rexpr().simple_expr().term().factor().ID().toString();
                         Double jtt = Double.parseDouble(table.get(var).toString());

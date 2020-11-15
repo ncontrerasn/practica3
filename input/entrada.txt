@@ -5,4 +5,10 @@ p++;
 when (p == 3) do break;
 print p;
 }
+p := 6;
+while(p < 10) do{
+print 100;
+p++;
+when (p == 8) do break;
+}
 end
