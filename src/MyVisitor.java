@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
 
     HashMap<String, Object> table = new HashMap<>();
+    boolean a = false;
 
     @Override
     public T visitMain_prog(MiLenguajeParser.Main_progContext ctx) {
@@ -74,11 +75,10 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
 
     @Override
     public T visitStmt(MiLenguajeParser.StmtContext ctx) {
-        System.out.println("STMT SOLO");
+        if(a) return null;
+        //System.out.println("STMT SOLO");
         if(ctx.TK_BREAK() != null){
-            Object ans2 = "break";
-            System.out.println("BREAK");
-            return (T) ans2;
+            a = true;
         }else if(ctx.TK_NEXT() != null){
             Object ans = visitLexpr(ctx.lexpr(0));
             return (T) ans;
@@ -161,9 +161,10 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
             }
         }else if(ctx.TK_WHILE() != null){
             Object check = visitLexpr(ctx.lexpr().get(0));
-            Object ans = null;
             if (check.toString().equals("true")||check.toString().equals("false")){
                 do{
+                    if(a)
+                        break;
                     if(ctx.lexpr().get(0).nexpr().rexpr().simple_expr().term().factor().s() != null && ctx.lexpr().get(0).nexpr().rexpr().simple_expr().term().factor().s().INCR() != null){
                         Object var = ctx.lexpr().get(0).nexpr().rexpr().simple_expr().term().factor().ID().toString();
                         Double jtt = Double.parseDouble(table.get(var).toString());
@@ -177,14 +178,9 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                         table.remove(ctx.lexpr().get(0).nexpr().rexpr().simple_expr().term().factor().ID().toString());
                         table.put(ctx.lexpr().get(0).nexpr().rexpr().simple_expr().term().factor().ID().toString(), jtt);
                     }
-                    ans = visitStmt_block(ctx.stmt_block().get(0));
-                    if(ans.toString().equals("break")){
-                        System.out.println("CHAO");
-                        break;
-                    }
+                    visitStmt_block(ctx.stmt_block(0));
                 }
                 while (Boolean.parseBoolean((visitLexpr(ctx.lexpr().get(0)).toString())));
-                return (T) ans;
             }else{
                 System.err.println("La operacion IF require un booleano");
                 System.exit(-1);
@@ -345,24 +341,25 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
 
     @Override
     public T visitStmt_block(MiLenguajeParser.Stmt_blockContext ctx) {
-        System.out.println("STMT BLOCK");
+        //System.out.println("STMT BLOCK");
         if(ctx.CORIZQ() != null){
-
-            visitStmt(ctx.stmt());
+            Object ans2 = visitStmt(ctx.stmt());
             visitStmt_mas(ctx.stmt_mas());
-            if(ctx.stmt().TK_BREAK() != null){
+            /*if(ctx.stmt().TK_BREAK() != null){
                 Object ans2 = "break";
                 System.out.println("BREAK");
+                System.out.println("ANS BREAK : " + ans2);
                 return (T) ans2;
-            }
-            return null;
+            }*/
+            return (T) ans2;
         }else if(ctx.stmt() != null){
-            System.out.println("STMT");
-            if(ctx.stmt().TK_BREAK() != null){
+            //System.out.println("STMT");
+            /*if(ctx.stmt().TK_BREAK() != null){
                 Object ans2 = "break";
                 System.out.println("BREAK");
+                System.out.println("ANS BREAK : " + ans2);
                 return (T) ans2;
-            }
+            }*/
             Object ans = visitStmt(ctx.stmt());
             return (T) ans;
         }

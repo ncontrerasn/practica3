@@ -1,6 +1,8 @@
 var p:num;
-repeat 3:{
+while(p < 5) do{
 print 99;
+p++;
+when (p == 3) do break;
+print p;
 }
-unless (p == 4) do print 100;
 end
