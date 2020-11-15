@@ -1,14 +1,6 @@
 var p:num;
-while(p < 5) do{
-print 99;
+do{
+print 1;
 p++;
-when (p == 3) do break;
-print p;
-}
-p := 6;
-while(p < 10) do{
-print 100;
-p++;
-when (p == 8) do break;
-}
+}while(p < 0)
 end
