@@ -79,8 +79,10 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
             Object ans2 = "break";
             System.out.println("BREAK");
             return (T) ans2;
-        }
-        if(ctx.TK_PRINT() != null){
+        }else if(ctx.TK_NEXT() != null){
+            Object ans = visitLexpr(ctx.lexpr(0));
+            return (T) ans;
+        }else if(ctx.TK_PRINT() != null){
             Object ans = visitLexpr(ctx.lexpr(0));
             System.out.println(ans.toString());
             return (T) ans;
@@ -187,6 +189,15 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                 System.err.println("La operacion IF require un booleano");
                 System.exit(-1);
             }
+        }else if(ctx.TK_DO() != null){
+            Object ans = null;
+            ans = visitStmt_block(ctx.stmt_block().get(0));
+            if(ctx.do_sig().TK_WHILE() != null){
+
+            }else if(ctx.do_sig().TK_UNTIL() != null){
+
+            }
+            return (T) ans;
         }else if(ctx.TK_LOOP() != null){
             Object ans = null;
             while (true){
