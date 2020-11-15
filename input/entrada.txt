@@ -1,4 +1,4 @@
 var p:num;
-input p;
-print p;
+p := 4;
+unless(p > 4) do print 99;
 end
