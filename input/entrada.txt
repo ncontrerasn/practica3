@@ -1,6 +1,7 @@
-var p:num;
-do{
-print 1;
-p++;
-}while(p < 0)
+var result:num;
+if (5<(10+5+5-15)) do {
+print 50;
+}else{
+print result;
+}
 end
