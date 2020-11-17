@@ -1,14 +1,18 @@
-var result:num;
-result:=10;
-print result;
-loop {
---result;
-print result;
-if (result==0) do {
-break;
-}else{
-next;
+function @inc:num (a:num) {
+    return ++a;
 }
-print false;
+
+function @dec:num (in:num) {
+    return --in;
 }
+
+function @suma:num (a:num, b: num) {
+    return a+b;
+}
+
+var x:num;
+x:=1;
+x:= @suma(@inc(x),@dec(6));
+
+print x; # 7.0
 end
