@@ -78,7 +78,7 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
         if(table.get(name) != null && !tableToDelete.isEmpty() && !tableToDelete.contains(name)){
             int line = ctx.ID().getSymbol().getLine();
             int col = ctx.ID().getSymbol().getCharPositionInLine() + 1;
-            System.err.printf("<%d:%d> Error semantico, la variable con nombre: \""+name+"\"ya fue declarada. \n", line, col);
+            System.err.printf("<%d:%d> Error semantico, la variable con nombre: \""+name+ "\"ya fue declarada. \n", line, col);
             System.exit(-1);
         }
         else if (TYPE.equals("num")){
@@ -159,7 +159,10 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                 }
                 return (T) ans;
             }else{
-                System.err.println("La operacion if require un booleano");
+                int line = ctx.PIZQ().getSymbol().getLine();
+                int col = ctx.PIZQ().getSymbol().getCharPositionInLine() + 1;
+                //System.err.println("La operacion if require un booleano");
+                System.err.printf("<%d:%d> Error semantico, la operacion if require un booleano. \n", line, col);//PONER ERROR
                 System.exit(-1);
             }
         }else if(ctx.TK_RETURN() != null){
@@ -186,7 +189,10 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                 if(input.equals("false") || input.equals("true"))
                     table.put(ctx.ID().toString(), input);
                 else{
-                    System.err.println("La entrada no coincide con el tipo de dato de la variable "+ ctx.ID().toString());
+                    int line = ctx.TK_INPUT().getSymbol().getLine();
+                    int col = ctx.TK_INPUT().getSymbol().getCharPositionInLine() + 1;
+                    //System.err.println("La entrada no coincide con el tipo de dato de la variable "+ ctx.ID().toString());
+                    System.err.printf("<%d:%d> Error semantico, la entrada no coincide con el tipo de dato de la variable: \""+ctx.ID().toString(), line, col);//PONER ERROR
                     System.exit(-1);
                 }
             }else{
@@ -196,7 +202,10 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                     numero = Double.parseDouble(cadena);
                     table.put(ctx.ID().toString(), numero);
                 } catch (NumberFormatException nfe){
-                    System.err.println("La entrada no coincide con el tipo de dato de la variable "+ ctx.ID().toString());
+                    int line = ctx.TK_INPUT().getSymbol().getLine();
+                    int col = ctx.TK_INPUT().getSymbol().getCharPositionInLine() + 1;
+                    //System.err.println("La entrada no coincide con el tipo de dato de la variable "+ ctx.ID().toString());
+                    System.err.printf("<%d:%d> Error semantico, la entrada no coincide con el tipo de dato de la variable: \""+ctx.ID().toString(), line, col);//PONER ERROR
                     System.exit(-1);
                 }
             }
@@ -233,7 +242,10 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                 ////System.out.println(ans.toString());
                 return (T) ans;
             }else{
-                System.err.println("La operacion for require un booleano");
+                int line = ctx.TK_FOR().getSymbol().getLine();
+                int col = ctx.TK_FOR().getSymbol().getCharPositionInLine() + 1;
+                //System.err.println("La operacion for require un booleano");
+                System.err.printf("<%d:%d> Error semantico, la operacion for require un booleano. \n", line, col);//PONER ERROR
                 System.exit(-1);
             }
         }else if(ctx.TK_WHEN() != null){
@@ -250,7 +262,10 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                 //System.out.println("TK_WHEN out "+check);
                 return (T) ans;
             }else{
-                System.err.println("La operacion when require un booleano");
+                int line = ctx.TK_WHEN().getSymbol().getLine();
+                int col = ctx.TK_WHEN().getSymbol().getCharPositionInLine() + 1;
+                //System.err.println("La operacion when require un booleano");
+                System.err.printf("<%d:%d> Error semantico, la operacion when require un booleano. \n", line, col);//PONER ERROR
                 System.exit(-1);
             }
         }else if(ctx.TK_UNLESS() != null){
@@ -263,7 +278,10 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                 ////System.out.println(ans.toString());
                 return (T) ans;
             }else{
-                System.err.println("La operacion unless require un booleano");
+                int line = ctx.TK_UNLESS().getSymbol().getLine();
+                int col = ctx.TK_UNLESS().getSymbol().getCharPositionInLine() + 1;
+                //System.err.println("La operacion unless require un booleano");
+                System.err.printf("<%d:%d> Error semantico, la operacion unless require un booleano. \n", line, col);//PONER ERROR
                 System.exit(-1);
             }
         }else if(ctx.TK_WHILE() != null){
@@ -294,7 +312,10 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                     visitStmt_block(ctx.stmt_block(0));
                 }
             }else{
-                System.err.println("La operacion while require un booleano");
+                int line = ctx.TK_WHILE().getSymbol().getLine();
+                int col = ctx.TK_WHILE().getSymbol().getCharPositionInLine() + 1;
+                //System.err.println("La operacion while require un booleano");
+                System.err.printf("<%d:%d> Error semantico, la operacion while require un booleano. \n", line, col);//PONER ERROR
                 System.exit(-1);
             }
         }else if(ctx.TK_UNTIL() != null){
@@ -325,7 +346,10 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                     visitStmt_block(ctx.stmt_block(0));
                 }
             }else{
-                System.err.println("La operacion until require un booleano");
+                int line = ctx.TK_UNTIL().getSymbol().getLine();
+                int col = ctx.TK_UNTIL().getSymbol().getCharPositionInLine() + 1;
+                //System.err.println("La operacion until require un booleano");
+                System.err.printf("<%d:%d> Error semantico, la operacion until require un booleano. \n", line, col);//PONER ERROR
                 System.exit(-1);
             }
         }else if(ctx.TK_DO() != null){
@@ -360,7 +384,10 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                     }
 
                 }else{
-                    System.err.println("La operacion while require un booleano");
+                    int line = ctx.TK_DO().getSymbol().getLine();
+                    int col = ctx.TK_DO().getSymbol().getCharPositionInLine() + 1;
+                    //System.err.println("La operacion do require un booleano");
+                    System.err.printf("<%d:%d> Error semantico, la operacion do require un booleano. \n", line, col);//PONER ERROR
                     System.exit(-1);
                 }
             }else if(ctx.do_sig().TK_UNTIL() != null){
@@ -391,7 +418,10 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                         visitStmt_block(ctx.stmt_block(0));
                     }
                 }else{
-                    System.err.println("La operacion until require un booleano");
+                    int line = ctx.TK_UNTIL().getSymbol().getLine();
+                    int col = ctx.TK_UNTIL().getSymbol().getCharPositionInLine() + 1;
+                    //System.err.println("La operacion until require un booleano");
+                    System.err.printf("<%d:%d> Error semantico, la operacion until require un booleano. \n", line, col);//PONER ERROR
                     System.exit(-1);
                 }
             }
@@ -429,7 +459,10 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
             return (T) ans;
         }else if (ctx.INCR() != null) {
             if (table.get(ctx.ID().toString()).equals("true") || table.get(ctx.ID().toString()).equals("true")){
-                System.err.println("La operacion ++ y -- no funcionan con booleanos");
+                int line = ctx.INCR().getSymbol().getLine();
+                int col = ctx.INCR().getSymbol().getCharPositionInLine() + 1;
+                //System.err.println("La operacion ++ no funcionan con booleanos");
+                System.err.printf("<%d:%d> Error semantico, la operacion ++ no funciona con booleanos. \n", line, col);//PONER ERROR
                 System.exit(-1);
             }else {
                 Double value = Double.parseDouble(table.get(ctx.ID().toString()).toString());
@@ -440,7 +473,10 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
             }
         }else if (ctx.DCR() != null) {
             if (table.get(ctx.ID().toString()).equals("true") || table.get(ctx.ID().toString()).equals("true")){
-                System.err.println("La operacion ++ y -- no funcionan con booleanos");
+                int line = ctx.DCR().getSymbol().getLine();
+                int col = ctx.DCR().getSymbol().getCharPositionInLine() + 1;
+                //System.err.println("La operacion -- no funcionan con booleanos");
+                System.err.printf("<%d:%d> Error semantico, la operacion -- no funcionan con booleanos. \n", line, col);//PONER ERROR
                 System.exit(-1);
             }else {
                 Double value = Double.parseDouble(table.get(ctx.ID().toString()).toString());
@@ -454,40 +490,62 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
             if (ctx.signo().ASIGOP()!=null) {
                 String ASGOP = ctx.signo().ASIGOP().toString();
                 Object ans = visitSigno(ctx.signo());
+                int line, col;
                 if (ans.toString().equals("true") || ans.toString().equals("false")) {
                     switch (ASGOP) {
                         case ":=":
                             if (!table.get(ctx.ID().toString()).toString().equals("true")&&!table.get(ctx.ID().toString()).toString().equals("false")){
-                                System.err.println("La variable "+ctx.ID().toString()+" es de tipo NUM no se le pueden asignar booleanos");
+                                line = ctx.signo().ASIGOP().getSymbol().getLine();
+                                col = ctx.signo().ASIGOP().getSymbol().getCharPositionInLine() + 1;
+                                //System.err.println("La variable "+ctx.ID().toString()+" es de tipo NUM no se le pueden asignar booleanos");
+                                System.err.printf("<%d:%d> Error semantico, la variable \""+ctx.ID().toString()+"\"es de tipo NUM, no se le pueden asignar un booleano. \n", line, col);//PONER ERROR
                                 System.exit(-1);
                             }else{
                                 /*nada*/
                             }
                             break;
                         case "+=":
-                            System.err.println("La operacion += no funciona con booleanos");
+                            line = ctx.signo().ASIGOP().getSymbol().getLine();
+                            col = ctx.signo().ASIGOP().getSymbol().getCharPositionInLine() + 1;
+                            //System.err.println("La operacion += no funciona con booleanos");
+                            System.err.printf("<%d:%d> Error semantico, la operacion += no funciona con booleanos. \n", line, col);//PONER ERROR
                             System.exit(-1);
                             break;
                         case "-=":
+                            line = ctx.signo().ASIGOP().getSymbol().getLine();
+                            col = ctx.signo().ASIGOP().getSymbol().getCharPositionInLine() + 1;
                             System.err.println("La operacion -= no funciona con booleanos");
+                            System.err.printf("<%d:%d> Error semantico, la operacion -= no funciona con booleanos. \n", line, col);//PONER ERROR
                             System.exit(-1);
                             break;
                         case "*=":
-                            System.err.println("La operacion *= no funciona con booleanos");
+                            line = ctx.signo().ASIGOP().getSymbol().getLine();
+                            col = ctx.signo().ASIGOP().getSymbol().getCharPositionInLine() + 1;
+                            //System.err.println("La operacion *= no funciona con booleanos");
+                            System.err.printf("<%d:%d> Error semantico, la operacion *= no funciona con booleanos. \n", line, col);//PONER ERROR
                             System.exit(-1);
                             break;
                         case "/=":
-                            System.err.println("La operacion /= no funciona con booleanos");
+                            line = ctx.signo().ASIGOP().getSymbol().getLine();
+                            col = ctx.signo().ASIGOP().getSymbol().getCharPositionInLine() + 1;
+                            //System.err.println("La operacion /= no funciona con booleanos");
+                            System.err.printf("<%d:%d> Error semantico, la operacion /= no funciona con booleanos. \n", line, col);//PONER ERROR
                             System.exit(-1);
                             break;
                         case "%=":
-                            System.err.println("La operacion %= no funciona con booleanos");
+                            line = ctx.signo().ASIGOP().getSymbol().getLine();
+                            col = ctx.signo().ASIGOP().getSymbol().getCharPositionInLine() + 1;
+                            //System.err.println("La operacion %= no funciona con booleanos");
+                            System.err.printf("<%d:%d> Error semantico, la operacion %= no funciona con booleanos. \n", line, col);//PONER ERROR
                             System.exit(-1);
                             break;
                     }
                 } else {
                     if (table.get(ctx.ID().toString()).toString().equals("true")||table.get(ctx.ID().toString()).toString().equals("false")){
-                        System.err.println("La variable "+ctx.ID().toString()+" es de tipo BOOL no se le pueden asignar numeros");
+                        line = ctx.signo().ASIGOP().getSymbol().getLine();
+                        col = ctx.signo().ASIGOP().getSymbol().getCharPositionInLine() + 1;
+                        //System.err.println("La variable "+ctx.ID().toString()+" es de tipo BOOL no se le pueden asignar numeros");
+                        System.err.printf("<%d:%d> Error semantico, la variable \""+ctx.ID().toString()+"\"es de tipo BOOL, no se le pueden asignar un numero. \n", line, col);//PONER ERROR
                         System.exit(-1);
                     }else{
                         /*nada*/
@@ -522,7 +580,10 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                 Object ans = 0.0;
                 String INCRDCR = visitSigno(ctx.signo()).toString();
                 if (table.get(ctx.ID().toString()).equals("true") || table.get(ctx.ID().toString()).equals("true")){
-                    System.err.println("La operacion ++ y -- no funcionan con booleanos");
+                    int line = ctx.INCR().getSymbol().getLine();
+                    int col = ctx.INCR().getSymbol().getCharPositionInLine() + 1;
+                    //System.err.println("La operacion ++ y -- no funcionan con booleanos");
+                    System.err.printf("<%d:%d> Error semantico, la operacion ++ y -- no funciona con booleanos. \n", line, col);//PONER ERROR
                     System.exit(-1);
                 }else {
                     Double value = Double.parseDouble(table.get(ctx.ID().toString()).toString());
@@ -765,10 +826,16 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                     Object ret = null;
                     //System.out.println("RESPONSE "+ans.toString()+"=="+resp.toString());
                     if ((ans.toString().equals("true")||ans.toString().equals("false"))&&!(resp.toString().equals("true")||resp.toString().equals("false"))){
-                        System.err.println("La operacion == no funciona con tipos de dato distintos");
+                        int line = ctx.rexpr().sig().ROP().getSymbol().getLine();
+                        int col = ctx.rexpr().sig().ROP().getSymbol().getCharPositionInLine() + 1;
+                        //System.err.println("La operacion == no funciona con tipos de dato distintos");
+                        System.err.printf("<%d:%d> Error semantico, la operacion == no funciona con con tipos de dato distintos. \n", line, col);//PONER ERROR
                         System.exit(-1);
                     } else if (!(ans.toString().equals("true")||ans.toString().equals("false"))&&(resp.toString().equals("true")||resp.toString().equals("false"))){
-                        System.err.println("La operacion == no funciona con tipos de dato distintos");
+                        int line = ctx.rexpr().sig().ROP().getSymbol().getLine();
+                        int col = ctx.rexpr().sig().ROP().getSymbol().getCharPositionInLine() + 1;
+                        //System.err.println("La operacion == no funciona con tipos de dato distintos");
+                        System.err.printf("<%d:%d> Error semantico, la operacion == no funciona con con tipos de dato distintos. \n", line, col);//PONER ERROR
                         System.exit(-1);
                     } else if ((ans.toString().equals("true")||ans.toString().equals("false"))&&(resp.toString().equals("true")||resp.toString().equals("false"))){
                         boolean op1 = Boolean.parseBoolean(ans.toString());
@@ -859,12 +926,18 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
         if (ctx.t2().SUMOP()!=null){
             String op = ctx.t2().SUMOP().toString();
             if (ans.toString().equals("true")||ans.toString().equals("false")){
-                System.err.println("La operacion "+op+" no funciona con booleanos");
+                int line = ctx.t2().SUMOP().getSymbol().getLine();
+                int col = ctx.t2().SUMOP().getSymbol().getCharPositionInLine() + 1;
+                //System.err.println("La operacion "+op+" no funciona con booleanos");
+                System.err.printf("<%d:%d> Error semantico, la operacion " + op + " no funciona con booleanos. \n", line, col);//PONER ERROR
                 System.exit(-1);
             }
             Object ans2 = visitT2(ctx.t2());
             if (ans2.toString().equals("true")||ans2.toString().equals("false")){
-                System.err.println("La operacion "+op+" no funciona con booleanos");
+                int line = ctx.t2().SUMOP().getSymbol().getLine();
+                int col = ctx.t2().SUMOP().getSymbol().getCharPositionInLine() + 1;
+                //System.err.println("La operacion "+op+" no funciona con booleanos");
+                System.err.printf("<%d:%d> Error semantico, la operacion " + op + " no funciona con booleanos. \n", line, col);//PONER ERROR
                 System.exit(-1);
             }
             switch(op){
@@ -885,12 +958,18 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
         if (ctx.t2().SUMOP()!=null){
             String op = ctx.t2().SUMOP().toString();
             if (ans.toString().equals("true")||ans.toString().equals("false")){
-                System.err.println("La operacion "+op+" no funciona con booleanos");
+                int line = ctx.t2().SUMOP().getSymbol().getLine();
+                int col = ctx.t2().SUMOP().getSymbol().getCharPositionInLine() + 1;
+                //System.err.println("La operacion "+op+" no funciona con booleanos");
+                System.err.printf("<%d:%d> Error semantico, la operacion " + op + " no funciona con booleanos. \n", line, col);//PONER ERROR
                 System.exit(-1);
             }
             Object ans2 = visitT2(ctx.t2());
             if (ans2.toString().equals("true")||ans2.toString().equals("false")){
-                System.err.println("La operacion "+op+" no funciona con booleanos");
+                int line = ctx.t2().SUMOP().getSymbol().getLine();
+                int col = ctx.t2().SUMOP().getSymbol().getCharPositionInLine() + 1;
+                //System.err.println("La operacion "+op+" no funciona con booleanos");
+                System.err.printf("<%d:%d> Error semantico, la operacion " + op + " no funciona con booleanos. \n", line, col);//PONER ERROR
                 System.exit(-1);
             }
             switch(op){
@@ -911,12 +990,18 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
         if (ctx.fa().MULOP()!=null){
             String op = ctx.fa().MULOP().toString();
             if (ans.toString().equals("true")||ans.toString().equals("false")){
-                System.err.println("La operacion "+op+" no funciona con booleanos");
+                int line = ctx.fa().MULOP().getSymbol().getLine();
+                int col = ctx.fa().MULOP().getSymbol().getCharPositionInLine() + 1;
+                //System.err.println("La operacion "+op+" no funciona con booleanos");
+                System.err.printf("<%d:%d> Error semantico, la operacion " + op + " no funciona con booleanos. \n", line, col);//PONER ERROR
                 System.exit(-1);
             }
             Object ans2 = visitFa(ctx.fa());
             if (ans2.toString().equals("true")||ans2.toString().equals("false")){
-                System.err.println("La operacion "+op+" no funciona con booleanos");
+                int line = ctx.fa().MULOP().getSymbol().getLine();
+                int col = ctx.fa().MULOP().getSymbol().getCharPositionInLine() + 1;
+                //System.err.println("La operacion "+op+" no funciona con booleanos");
+                System.err.printf("<%d:%d> Error semantico, la operacion " + op + " no funciona con booleanos. \n", line, col);//PONER ERROR
                 System.exit(-1);
             }
             switch(op){
@@ -928,12 +1013,18 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
         }else if (ctx.fa().MODOP()!=null){
             String op = ctx.fa().MODOP().toString();
             if (ans.toString().equals("true")||ans.toString().equals("false")){
-                System.err.println("La operacion "+op+" no funciona con booleanos");
+                int line = ctx.fa().MULOP().getSymbol().getLine();
+                int col = ctx.fa().MULOP().getSymbol().getCharPositionInLine() + 1;
+                //System.err.println("La operacion "+op+" no funciona con booleanos");
+                System.err.printf("<%d:%d> Error semantico, la operacion " + op + " no funciona con booleanos. \n", line, col);//PONER ERROR
                 System.exit(-1);
             }
             Object ans2 = visitFa(ctx.fa());
             if (ans2.toString().equals("true")||ans2.toString().equals("false")){
-                System.err.println("La operacion "+op+" no funciona con booleanos");
+                int line = ctx.fa().MULOP().getSymbol().getLine();
+                int col = ctx.fa().MULOP().getSymbol().getCharPositionInLine() + 1;
+                //System.err.println("La operacion "+op+" no funciona con booleanos");
+                System.err.printf("<%d:%d> Error semantico, la operacion " + op + " no funciona con booleanos. \n", line, col);//PONER ERROR
                 System.exit(-1);
             }
             switch(op){
@@ -952,12 +1043,18 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
         if (ctx.fa().MULOP()!=null){
             String op = ctx.fa().MULOP().toString();
             if (ans.toString().equals("true")||ans.toString().equals("false")){
-                System.err.println("La operacion "+op+" no funciona con booleanos");
+                int line = ctx.fa().MULOP().getSymbol().getLine();
+                int col = ctx.fa().MULOP().getSymbol().getCharPositionInLine() + 1;
+                //System.err.println("La operacion "+op+" no funciona con booleanos");
+                System.err.printf("<%d:%d> Error semantico, la operacion " + op + " no funciona con booleanos. \n", line, col);//PONER ERROR
                 System.exit(-1);
             }
             Object ans2 = visitFa(ctx.fa());
             if (ans2.toString().equals("true")||ans2.toString().equals("false")){
-                System.err.println("La operacion "+op+" no funciona con booleanos");
+                int line = ctx.fa().MULOP().getSymbol().getLine();
+                int col = ctx.fa().MULOP().getSymbol().getCharPositionInLine() + 1;
+                //System.err.println("La operacion "+op+" no funciona con booleanos");
+                System.err.printf("<%d:%d> Error semantico, la operacion " + op + " no funciona con booleanos. \n", line, col);//PONER ERROR
                 System.exit(-1);
             }
             switch(op){
@@ -969,12 +1066,18 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
         }else if (ctx.fa().MODOP()!=null){
             String op = ctx.fa().MODOP().toString();
             if (ans.toString().equals("true")||ans.toString().equals("false")){
-                System.err.println("La operacion "+op+" no funciona con booleanos");
+                int line = ctx.fa().MULOP().getSymbol().getLine();
+                int col = ctx.fa().MULOP().getSymbol().getCharPositionInLine() + 1;
+                //System.err.println("La operacion "+op+" no funciona con booleanos");
+                System.err.printf("<%d:%d> Error semantico, la operacion " + op + " no funciona con booleanos. \n", line, col);//PONER ERROR
                 System.exit(-1);
             }
             Object ans2 = visitFa(ctx.fa());
             if (ans2.toString().equals("true")||ans2.toString().equals("false")){
-                System.err.println("La operacion "+op+" no funciona con booleanos");
+                int line = ctx.fa().MULOP().getSymbol().getLine();
+                int col = ctx.fa().MULOP().getSymbol().getCharPositionInLine() + 1;
+                //System.err.println("La operacion "+op+" no funciona con booleanos");
+                System.err.printf("<%d:%d> Error semantico, la operacion " + op + " no funciona con booleanos. \n", line, col);//PONER ERROR
                 System.exit(-1);
             }
             switch(op){
@@ -1031,7 +1134,10 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                     }else if(!(table.get(var).toString().equals("true")||table.get(var).toString().equals("false"))&&!(var1.toString().equals("true")||var1.toString().equals("false"))){
                         table.put(var,var1);
                     }else{
-                        System.err.println("Error, la variable "+var+" no acepta el input "+var1);
+                        int line = ctx.FID().getSymbol().getLine();
+                        int col = ctx.FID().getSymbol().getCharPositionInLine() + 1;
+                        //System.err.println("Error, la variable "+var+" no acepta el input "+var1);
+                        System.err.printf("<%d:%d> Error semantico, la variable \""+var+"\" no acepta el input " + var1+". \n", line, col);//PONER ERROR
                         System.exit(-1);
                     }
                 }
@@ -1052,13 +1158,22 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
             Object ans = null;
             //System.out.println("FUNCTION retornar "+retornar);
             if(retornar==null) {
-                System.err.println("Error, la funcion "+ctx.FID().toString()+" no tiene return o retorna null");
+                int line = ctx.FID().getSymbol().getLine();
+                int col = ctx.FID().getSymbol().getCharPositionInLine() + 1;
+                //System.err.println("Error, la funcion "+ctx.FID().toString()+" no tiene return o retorna null");
+                System.err.printf("<%d:%d> Error semantico, la funcion \""+ctx.FID().toString()+"\" no tiene return o retorna null. \n", line, col);//PONER ERROR
                 System.exit(-1);
             }else if ((retornar.toString().equals("true")||retornar.toString().equals("false"))&&(FunctionCtx.DATATYPE().toString().equals("num"))){
-                System.err.println("Error, la funcion "+ctx.FID().toString()+" es de tipo NUM pero retorna BOOL");
+                int line = ctx.FID().getSymbol().getLine();
+                int col = ctx.FID().getSymbol().getCharPositionInLine() + 1;
+                //System.err.println("Error, la funcion "+ctx.FID().toString()+" es de tipo NUM pero retorna BOOL");
+                System.err.printf("<%d:%d> Error semantico, la funcion \""+ctx.FID().toString()+"\" es de tipo NUM pero retorna BOOL. \n", line, col);//PONER ERROR
                 System.exit(-1);
             }else if (!(retornar.toString().equals("true")||retornar.toString().equals("false"))&&(FunctionCtx.DATATYPE().toString().equals("bool"))){
-                System.err.println("Error, la funcion "+ctx.FID().toString()+" es de tipo BOOL pero retorna NUM");
+                int line = ctx.FID().getSymbol().getLine();
+                int col = ctx.FID().getSymbol().getCharPositionInLine() + 1;
+                //System.err.println("Error, la funcion "+ctx.FID().toString()+" es de tipo BOOL pero retorna NUM");
+                System.err.printf("<%d:%d> Error semantico, la funcion \""+ctx.FID().toString()+"\" es de tipo BOOL pero retorna NUM. \n", line, col);//PONER ERROR
                 System.exit(-1);
             }else {
                 ans = retornar;
