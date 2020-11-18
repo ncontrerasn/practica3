@@ -22,7 +22,7 @@ public class MiLenguajeParser extends Parser {
 		TK_DO=21, TK_REPEAT=22, TK_FOR=23, TK_NEXT=24, TK_BREAK=25, TK_ELSE=26, 
 		PIZQ=27, PDER=28, CORIZQ=29, CORDER=30, ROP=31, ASIGOP=32, SMCOLON=33, 
 		MULOP=34, SUMOP=35, MODOP=36, COLON=37, INCR=38, DCR=39, TK_NOT=40, TK_NUM=41, 
-		DOUBLE=42, ID=43;
+		ID=42;
 	public static final int
 		RULE_prog = 0, RULE_prog_fn = 1, RULE_main_prog = 2, RULE_main_stmt = 3, 
 		RULE_stmt = 4, RULE_do_sig = 5, RULE_signo = 6, RULE_fn_decl_list = 7, 
@@ -60,7 +60,7 @@ public class MiLenguajeParser extends Parser {
 			"TK_UNLESS", "TK_END", "TK_WHILE", "TK_RETURN", "TK_UNTIL", "TK_LOOP", 
 			"TK_DO", "TK_REPEAT", "TK_FOR", "TK_NEXT", "TK_BREAK", "TK_ELSE", "PIZQ", 
 			"PDER", "CORIZQ", "CORDER", "ROP", "ASIGOP", "SMCOLON", "MULOP", "SUMOP", 
-			"MODOP", "COLON", "INCR", "DCR", "TK_NOT", "TK_NUM", "DOUBLE", "ID"
+			"MODOP", "COLON", "INCR", "DCR", "TK_NOT", "TK_NUM", "ID"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -2240,7 +2240,7 @@ public class MiLenguajeParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3-\u015c\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3,\u015c\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
@@ -2277,7 +2277,7 @@ public class MiLenguajeParser extends Parser {
 		"\5\24\13\2KL\7#\2\2LM\5\b\5\2MN\7\22\2\2NS\3\2\2\2OP\5\b\5\2PQ\7\22\2"+
 		"\2QS\3\2\2\2RI\3\2\2\2RO\3\2\2\2S\7\3\2\2\2TU\5\n\6\2UV\5\b\5\2VY\3\2"+
 		"\2\2WY\3\2\2\2XT\3\2\2\2XW\3\2\2\2Y\t\3\2\2\2Z[\7\r\2\2[\\\5\34\17\2\\"+
-		"]\7#\2\2]\u00ac\3\2\2\2^_\7\16\2\2_`\7-\2\2`\u00ac\7#\2\2ab\7\17\2\2b"+
+		"]\7#\2\2]\u00ac\3\2\2\2^_\7\16\2\2_`\7,\2\2`\u00ac\7#\2\2ab\7\17\2\2b"+
 		"c\7\35\2\2cd\5\34\17\2de\7\36\2\2ef\7\27\2\2fg\5\30\r\2g\u00ac\3\2\2\2"+
 		"hi\7\20\2\2ij\7\35\2\2jk\5\34\17\2kl\7\36\2\2lm\7\27\2\2mn\5\30\r\2no"+
 		"\7\34\2\2op\5\30\r\2p\u00ac\3\2\2\2qr\7\21\2\2rs\7\35\2\2st\5\34\17\2"+
@@ -2293,9 +2293,9 @@ public class MiLenguajeParser extends Parser {
 		"\u0098\7#\2\2\u0098\u0099\5\34\17\2\u0099\u009a\7#\2\2\u009a\u009b\5\34"+
 		"\17\2\u009b\u009c\7\36\2\2\u009c\u009d\7\27\2\2\u009d\u009e\5\30\r\2\u009e"+
 		"\u00ac\3\2\2\2\u009f\u00a0\7\32\2\2\u00a0\u00ac\7#\2\2\u00a1\u00a2\7\33"+
-		"\2\2\u00a2\u00ac\7#\2\2\u00a3\u00a4\7-\2\2\u00a4\u00ac\5\16\b\2\u00a5"+
-		"\u00a6\7(\2\2\u00a6\u00a7\7-\2\2\u00a7\u00ac\7#\2\2\u00a8\u00a9\7)\2\2"+
-		"\u00a9\u00aa\7-\2\2\u00aa\u00ac\7#\2\2\u00abZ\3\2\2\2\u00ab^\3\2\2\2\u00ab"+
+		"\2\2\u00a2\u00ac\7#\2\2\u00a3\u00a4\7,\2\2\u00a4\u00ac\5\16\b\2\u00a5"+
+		"\u00a6\7(\2\2\u00a6\u00a7\7,\2\2\u00a7\u00ac\7#\2\2\u00a8\u00a9\7)\2\2"+
+		"\u00a9\u00aa\7,\2\2\u00aa\u00ac\7#\2\2\u00abZ\3\2\2\2\u00ab^\3\2\2\2\u00ab"+
 		"a\3\2\2\2\u00abh\3\2\2\2\u00abq\3\2\2\2\u00abx\3\2\2\2\u00ab\177\3\2\2"+
 		"\2\u00ab\u0083\3\2\2\2\u00ab\u008a\3\2\2\2\u00ab\u008c\3\2\2\2\u00ab\u0090"+
 		"\3\2\2\2\u00ab\u0094\3\2\2\2\u00ab\u009f\3\2\2\2\u00ab\u00a1\3\2\2\2\u00ab"+
@@ -2312,9 +2312,9 @@ public class MiLenguajeParser extends Parser {
 		"\u00ca\7\36\2\2\u00ca\u00cb\5\22\n\2\u00cb\u00cc\5\30\r\2\u00cc\21\3\2"+
 		"\2\2\u00cd\u00ce\7\f\2\2\u00ce\u00cf\5\24\13\2\u00cf\u00d0\7#\2\2\u00d0"+
 		"\u00d3\3\2\2\2\u00d1\u00d3\3\2\2\2\u00d2\u00cd\3\2\2\2\u00d2\u00d1\3\2"+
-		"\2\2\u00d3\23\3\2\2\2\u00d4\u00d5\7-\2\2\u00d5\u00d6\7\3\2\2\u00d6\u00d7"+
+		"\2\2\u00d3\23\3\2\2\2\u00d4\u00d5\7,\2\2\u00d5\u00d6\7\3\2\2\u00d6\u00d7"+
 		"\7\6\2\2\u00d7\u00d8\5\26\f\2\u00d8\25\3\2\2\2\u00d9\u00da\7\'\2\2\u00da"+
-		"\u00db\7-\2\2\u00db\u00dc\7\3\2\2\u00dc\u00dd\7\6\2\2\u00dd\u00e0\5\26"+
+		"\u00db\7,\2\2\u00db\u00dc\7\3\2\2\u00dc\u00dd\7\6\2\2\u00dd\u00e0\5\26"+
 		"\f\2\u00de\u00e0\3\2\2\2\u00df\u00d9\3\2\2\2\u00df\u00de\3\2\2\2\u00e0"+
 		"\27\3\2\2\2\u00e1\u00e2\7\37\2\2\u00e2\u00e3\5\n\6\2\u00e3\u00e4\5\32"+
 		"\16\2\u00e4\u00e5\7 \2\2\u00e5\u00e8\3\2\2\2\u00e6\u00e8\5\n\6\2\u00e7"+
@@ -2345,8 +2345,8 @@ public class MiLenguajeParser extends Parser {
 		"\u0133\u013a\3\2\2\2\u0134\u0135\7&\2\2\u0135\u0136\5:\36\2\u0136\u0137"+
 		"\58\35\2\u0137\u013a\3\2\2\2\u0138\u013a\3\2\2\2\u0139\u0130\3\2\2\2\u0139"+
 		"\u0134\3\2\2\2\u0139\u0138\3\2\2\2\u013a9\3\2\2\2\u013b\u014e\7+\2\2\u013c"+
-		"\u014e\7\t\2\2\u013d\u013e\7-\2\2\u013e\u014e\5<\37\2\u013f\u0140\7(\2"+
-		"\2\u0140\u014e\7-\2\2\u0141\u0142\7)\2\2\u0142\u014e\7-\2\2\u0143\u0144"+
+		"\u014e\7\t\2\2\u013d\u013e\7,\2\2\u013e\u014e\5<\37\2\u013f\u0140\7(\2"+
+		"\2\u0140\u014e\7,\2\2\u0141\u0142\7)\2\2\u0142\u014e\7,\2\2\u0143\u0144"+
 		"\7\35\2\2\u0144\u0145\5\34\17\2\u0145\u0146\7\36\2\2\u0146\u014e\3\2\2"+
 		"\2\u0147\u0148\7\13\2\2\u0148\u0149\7\35\2\2\u0149\u014a\5\34\17\2\u014a"+
 		"\u014b\5> \2\u014b\u014c\7\36\2\2\u014c\u014e\3\2\2\2\u014d\u013b\3\2"+

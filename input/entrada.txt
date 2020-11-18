@@ -1,4 +1,14 @@
-var i:num;
-i:=1;
-for(i; i<3; i++) do print 20;
-end
+function @suma1:num (a:num) {
+    return a+1;
+}
+
+function @suma1Ymult5:num (a:num) {
+    return @suma1(a)*5;
+}
+
+var x:num;
+x:=1;
+x:= @suma1Ymult5(x);
+
+print x; # 10.0
+end;

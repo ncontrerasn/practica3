@@ -8,12 +8,11 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
     ArrayList<Object> vars = new ArrayList<Object>();
     ArrayList<String> tableToDelete = new ArrayList<String>();
     boolean delete = false;
-    boolean a = false;
+    boolean stop = false;
     int varNum = 0;
     Object retornar = null;
     boolean retornado = false;
     boolean canPrint = true;
-    boolean canOperateStmt = true;
     boolean Next = false;
 
     @Override
@@ -141,10 +140,10 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
             }
             return null;
         }*/
-        if(a) return null;
+        if(stop) return null;
         if(Next) return null;
         if(ctx.TK_BREAK() != null){
-            a = true;
+            stop = true;
         }else if(ctx.TK_NEXT() != null){
             Next = true;
         }else if(ctx.TK_IF() != null){
@@ -177,7 +176,11 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
         }else if(ctx.TK_PRINT() != null){
             Object ans = visitLexpr(ctx.lexpr(0));
             if (canPrint) {
-                System.out.println(ans.toString());
+                if (ans.toString().equals("true")||ans.toString().equals("false")){
+                    System.out.println(ans.toString());
+                }else{
+                    System.out.println(Double.parseDouble(ans.toString()));
+                }
             }
             ////System.out.println(ans.toString());
             return (T) ans;
@@ -215,8 +218,8 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
             Object ans = null;
             if (check.toString().equals("true")||check.toString().equals("false")){
                 while (Boolean.parseBoolean((visitLexpr(ctx.lexpr().get(1)).toString()))){
-                    if(a){
-                        a = false;
+                    if(stop){
+                        stop = false;
                         break;
                     }
                     if(Next){
@@ -288,8 +291,8 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
             Object check = visitLexpr(ctx.lexpr().get(0));
             if (check.toString().equals("true")||check.toString().equals("false")){
                 while (Boolean.parseBoolean((visitLexpr(ctx.lexpr().get(0)).toString()))) {
-                    if (a) {
-                        a = false;
+                    if (stop) {
+                        stop = false;
                         break;
                     }
                     if(Next){
@@ -322,8 +325,8 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
             Object check = visitLexpr(ctx.lexpr().get(0));
             if (check.toString().equals("true")||check.toString().equals("false")){
                 while (!Boolean.parseBoolean((visitLexpr(ctx.lexpr().get(0)).toString()))){
-                    if (a) {
-                        a = false;
+                    if (stop) {
+                        stop = false;
                         break;
                     }
                     if(Next){
@@ -359,8 +362,8 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                 Object check = visitLexpr(ctx.do_sig().lexpr());
                 if (check.toString().equals("true")||check.toString().equals("false")){
                     while (Boolean.parseBoolean((visitLexpr(ctx.do_sig().lexpr()).toString()))){
-                        if(a){
-                            a = false;
+                        if(stop){
+                            stop = false;
                             break;
                         }
                         if(Next){
@@ -394,8 +397,8 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
                 Object check = visitLexpr(ctx.do_sig().lexpr());
                 if (check.toString().equals("true")||check.toString().equals("false")){
                     while (!Boolean.parseBoolean((visitLexpr(ctx.do_sig().lexpr()).toString()))){
-                        if(a){
-                            a = false;
+                        if(stop){
+                            stop = false;
                             break;
                         }
                         if(Next){
@@ -430,8 +433,8 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
         }else if(ctx.TK_LOOP() != null){
             Object ans = null;
             while (true){
-                if(a){
-                    a = false;
+                if(stop){
+                    stop = false;
                     break;
                 }
                 if(Next){
@@ -445,8 +448,8 @@ public class MyVisitor<T> extends MiLenguajeBaseVisitor<T> {
         }else if(ctx.TK_REPEAT() != null){
             Object ans = null;
             for (int i = 0; i < Integer.parseInt(ctx.TK_NUM().toString()); i++){
-                if(a){
-                    a = false;
+                if(stop){
+                    stop = false;
                     break;
                 }
                 if(Next){
